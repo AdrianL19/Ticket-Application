@@ -1,5 +1,6 @@
 package com.example.application.views.Administrator;
 import com.example.application.views.User.MainViewUser;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H4;
@@ -16,7 +17,7 @@ import com.vaadin.flow.router.Route;
 public class WelcomeAdmin extends VerticalLayout {
     private H1 title = new H1("Welcome Administrator!");
     private H4 redirectUser = new H4("If you want to add/edit/delete any information about an user press the button below.");
-    private Button redirectUserButton = new Button("Administrate USERS");
+    private Button redirectUserButton = new Button("Administrate USERS",event -> UI.getCurrent().navigate("modifyUser"));
     public WelcomeAdmin() {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);

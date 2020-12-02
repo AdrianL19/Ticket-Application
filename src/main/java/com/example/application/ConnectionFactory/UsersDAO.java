@@ -45,4 +45,18 @@ public class UsersDAO {
         }
 
     }
+    public void deleteUser(String username){
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("delete from users where username = ?");
+            statement.setString(1,username);
+            statement.executeUpdate();
+
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
+
+    }
 }
