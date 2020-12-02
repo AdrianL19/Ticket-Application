@@ -1,10 +1,7 @@
-package com.example.application.views.main;
+package com.example.application.views.Administrator;
 
 import java.util.Optional;
 
-import com.example.application.views.User.GalleryView;
-import com.example.application.views.User.RoutesView;
-import com.example.application.views.Welcome.WelcomeUser;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -21,20 +18,19 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
-import com.example.application.views.about.AboutViewUser;
 
 /**
  * The main view is a top-level placeholder for other views.
  */
 @JsModule("./styles/shared-styles.js")
 @CssImport("./styles/views/main/main-view.css")
-public class MainViewUser extends AppLayout {
+public class MainViewAdministrator extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
 
 
-    public MainViewUser() {
+    public MainViewAdministrator() {
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
@@ -83,10 +79,9 @@ public class MainViewUser extends AppLayout {
 
     private Component[] createMenuItems() {
         return new Tab[]{
-        createTab("Welcome", WelcomeUser.class),
-        createTab("Routes", RoutesView.class),
-        createTab("Gallery", GalleryView.class),
-        createTab("About", AboutViewUser.class)};
+                createTab("Welcome", WelcomeAdmin.class),
+                createTab("User Modify", ModifyUserView.class)
+        };
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

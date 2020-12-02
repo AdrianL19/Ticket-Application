@@ -1,6 +1,5 @@
 package com.example.application.views.User;
 
-import com.example.application.views.main.MainViewUser;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
