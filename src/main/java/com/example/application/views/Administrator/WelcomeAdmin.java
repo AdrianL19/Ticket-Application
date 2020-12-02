@@ -1,7 +1,10 @@
 package com.example.application.views.Administrator;
+import com.example.application.ConnectionFactory.UsersDAO;
+import com.example.application.Model.User;
 import com.example.application.views.User.MainViewUser;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Main;
@@ -23,6 +26,7 @@ public class WelcomeAdmin extends VerticalLayout {
         setAlignItems(Alignment.CENTER);
         setId("about-view");
         add(title,redirectUser,redirectUserButton);
+
     }
 
 }

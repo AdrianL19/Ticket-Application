@@ -12,6 +12,7 @@ import java.util.List;
 public class UsersDAO {
     List<User> users = new ArrayList<>();
     public List<User> getUsers(){
+        users.clear();
         Connection dbConnection = ConnectionFactory.getConnection();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("select * from users");
@@ -58,5 +59,47 @@ public class UsersDAO {
             ConnectionFactory.close(dbConnection);
         }
 
+    }
+    public void updateUsername(String update,String username){
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("update users set username = ? where username = ?");
+            statement.setString(1,update);
+            statement.setString(2,username);
+            statement.executeUpdate();
+
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
+    }
+    public void updatePassword(String update,String username){
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("update users set passwordUser = ? where username = ?");
+            statement.setString(1,update);
+            statement.setString(2,username);
+            statement.executeUpdate();
+
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
+    }
+    public void updateRole(String update,String username){
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("update users set role = ? where username = ?");
+            statement.setString(1,update);
+            statement.setString(2,username);
+            statement.executeUpdate();
+
+        }catch ( SQLException throwables ) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
     }
 }
