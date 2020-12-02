@@ -35,6 +35,7 @@ public class RegisterPage extends VerticalLayout {
 
     private void registerUser() {
         UsersDAO users = new UsersDAO();
+
         if(password.getValue().equals(retypePassword.getValue())){
             User temp = new User(name.getValue(),password.getValue(),"User");
             users.insertUser(temp);
