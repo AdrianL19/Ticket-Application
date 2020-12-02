@@ -1,4 +1,4 @@
-package com.example.application.views.Gallery;
+package com.example.application.views.User;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.html.Div;
@@ -14,5 +14,6 @@ public class GalleryView extends Div {
         setId("about-view");
         add(new Text("Gallery"));
     }
+
 
 }

@@ -48,7 +48,7 @@ public class LoginView extends VerticalLayout {
                         UI.getCurrent().navigate("welcomeUser");
                         break;
                     case "Administrator":
-                        UI.getCurrent().navigate("");
+                        UI.getCurrent().navigate("welcomeAdmin");
                         break;
                     case "Sofer":
                         UI.getCurrent().navigate("");
