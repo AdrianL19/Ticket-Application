@@ -2,6 +2,9 @@ package com.example.application.views.User;
 
 import java.util.Optional;
 
+import com.example.application.views.User.GalleryView;
+import com.example.application.views.User.RoutesView;
+import com.example.application.views.User.WelcomeUser;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;

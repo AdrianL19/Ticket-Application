@@ -23,7 +23,7 @@ import java.util.List;
 @CssImport("./styles/views/helloworld/hello-world-view.css")
 @RouteAlias(value = "")
 public class LoginView extends VerticalLayout {
-
+    private boolean loginSuccesfull=false;
     private TextField name = new TextField("Username");
     private PasswordField password= new PasswordField("Password");
     private H1 titlu = new H1("Ticket Application");
@@ -40,6 +40,7 @@ public class LoginView extends VerticalLayout {
     public void checkLogin() {
         UsersDAO users = new UsersDAO();
         List<User> listUsers = users.getUsers();
+        String username="";
         User temp = new User(name.getValue(),password.getValue(),null);
         for(User i : listUsers){
             if((i.getUsername().equals(temp.getUsername()))& (i.getPassword().equals(temp.getPassword())) ){
@@ -54,9 +55,15 @@ public class LoginView extends VerticalLayout {
                         UI.getCurrent().navigate("");
                         break;
                 }
-            }else{
-                Notification.show("Error! Invalid Username or password!");
+                loginSuccesfull=true;
+                username = i.getUsername();
             }
+
+        }
+        if(loginSuccesfull){
+            Notification.show(username+ " logged in successfully!");
+        }else{
+            Notification.show("Error! Invalid credentials");
         }
 
 
