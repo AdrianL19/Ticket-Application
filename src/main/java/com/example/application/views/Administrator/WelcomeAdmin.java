@@ -22,7 +22,9 @@ import javax.servlet.http.HttpSession;
 public class WelcomeAdmin extends VerticalLayout {
     private H1 title = new H1("Welcome");
     private H4 redirectUser = new H4("If you want to add/edit/delete any information about an user press the button below.");
+    private H4 redirectSchedule = new H4( "If you want to add/edit/delete any information about a driver's schedule press the button below.");
     private Button redirectUserButton = new Button("Administrate USERS",event -> UI.getCurrent().navigate("modifyUser"));
+    private Button redirectScheduleButton = new Button("Administrate Driver's Schedule",event -> UI.getCurrent().navigate("scheduleAdmin"));
     public HttpSession session;
     public HttpServletRequest req;
     public WelcomeAdmin() {
@@ -33,7 +35,7 @@ public class WelcomeAdmin extends VerticalLayout {
         User currentUser = (User) session.getAttribute("user");
         title.setText("Welcome Administrator, "+ currentUser.getUsername());
         setId("about-view");
-        add(title,redirectUser,redirectUserButton);
+        add(title,redirectUser,redirectUserButton,redirectSchedule,redirectScheduleButton);
 
     }
 

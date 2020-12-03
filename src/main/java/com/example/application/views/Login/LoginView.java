@@ -34,7 +34,7 @@ import java.util.List;
 public class LoginView extends VerticalLayout {
     public User currentUser=null;
     private boolean loginSuccesfull=false;
-    private TextField name = new TextField("Username");
+    private TextField name = new TextField("Username or Email");
     private PasswordField password= new PasswordField("Password");
     private H1 titlu = new H1("Ticket Application");
     private H3 register= new H3("Don't have an account? Click the button below to create an account!");

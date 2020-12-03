@@ -119,4 +119,22 @@ public class UsersDAO {
             ConnectionFactory.close(dbConnection);
         }
     }
+    public List<String> getDrivers(){
+        List<String> drivers = new ArrayList<>();
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("select * from users where role = ? ");
+            statement.setString(1, "Driver");
+            ResultSet result = statement.executeQuery();
+            while(result.next()){
+                String username= result.getString("username");
+                drivers.add(username);
+            }
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
+        return drivers;
+    }
 }

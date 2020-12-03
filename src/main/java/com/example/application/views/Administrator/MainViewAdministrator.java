@@ -85,7 +85,9 @@ public class MainViewAdministrator extends AppLayout {
     private Component[] createMenuItems() {
         return new Tab[]{
                 createTab("Welcome", WelcomeAdmin.class),
-                createTab("Modify", ModifyUserView.class)};
+                createTab("Modify", ModifyUserView.class),
+                createTab("Driver's schedule", ScheduleDrivers.class)
+        };
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
