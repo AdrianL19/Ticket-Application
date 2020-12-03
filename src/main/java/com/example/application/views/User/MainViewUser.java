@@ -27,7 +27,7 @@ import com.example.application.views.about.AboutViewUser;
  * The main view is a top-level placeholder for other views.
  */
 @JsModule("./styles/shared-styles.js")
-@CssImport("./styles/views/main/main-view.css")
+@CssImport("./styles/views/main/client-view.css")
 public class MainViewUser extends AppLayout {
 
     private final Tabs menu;
@@ -66,8 +66,8 @@ public class MainViewUser extends AppLayout {
         HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("images/logo.png", "My Project logo"));
-        logoLayout.add(new H1("My Project"));
+        logoLayout.add(new Image("images/ticket.png", "Ticket APP logo"));
+        logoLayout.add(new H1("Ticket Application"));
         layout.add(logoLayout, menu);
         return layout;
     }

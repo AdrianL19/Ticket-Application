@@ -47,11 +47,6 @@ public class ModifyUserView extends VerticalLayout {
         buttonsBox();
         buttonListeners();
         gridSetup();
-
-        req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
-        session = req.getSession();
-        User  currentUser = (User) session.getAttribute("user");
-        System.out.println(currentUser);
     }
     public void gridSetup(){
         grid = new Grid<>();

@@ -79,8 +79,8 @@ public class LoginView extends VerticalLayout {
             case "Administrator":
                 UI.getCurrent().navigate("welcomeAdmin");
                 break;
-            case "Sofer":
-                UI.getCurrent().navigate("");
+            case "Driver":
+                UI.getCurrent().navigate("welcomeDriver");
                 break;
         }
     }
