@@ -69,6 +69,7 @@ public class MainViewAdministrator extends AppLayout {
         logoLayout.add(new Image("images/ticket.png", "Ticket APP logo"));
         logoLayout.add(new H1("Ticket Application"));
         layout.add(logoLayout, menu);
+        layout.getThemeList().set("dark", true);
         return layout;
     }
 

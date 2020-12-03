@@ -27,11 +27,13 @@ import java.util.List;
 public class ModifyUserView extends VerticalLayout {
     private TextField username = new TextField("Username");
     private TextField password = new TextField("Password");
+    private TextField email = new TextField("Email");
     private UsersDAO user = new UsersDAO();
     private ComboBox<String> roles = new ComboBox<>();
     private Button addUser = new Button("Add User");
     private Button editUsername = new Button("Change User");
     private Button editPassword = new Button("Change Password");
+    private Button editEmail = new Button("Change Email");
     private Button editRole = new Button("Change Role");
     private Button deleteUser = new Button("Delete User");
     private Button viewUsers = new Button("View Users");
@@ -47,11 +49,14 @@ public class ModifyUserView extends VerticalLayout {
         buttonsBox();
         buttonListeners();
         gridSetup();
+
     }
     public void gridSetup(){
         grid = new Grid<>();
+        grid.addColumn(User::getId).setHeader("ID");
         grid.addColumn(User::getUsername).setHeader("Username");
         grid.addColumn(User::getPassword).setHeader("Password");
+        grid.addColumn(User::getEmail).setHeader("Email");
         grid.addColumn(User::getRole).setHeader("Role");
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         grid.getColumns().forEach(col->col.setAutoWidth(true));
@@ -62,7 +67,7 @@ public class ModifyUserView extends VerticalLayout {
     }
     public void userInfosBox(){
         HorizontalLayout firstBox = new HorizontalLayout();
-        firstBox.add(username,password);
+        firstBox.add(username,password,email);
         comboBoxInit();
         firstBox.add(roles);
         add(firstBox);
@@ -73,6 +78,7 @@ public class ModifyUserView extends VerticalLayout {
         secondBox.add(addUser);
         secondBox.add(editUsername);
         secondBox.add(editPassword);
+        secondBox.add(editEmail);
         secondBox.add(editRole);
         secondBox.add(deleteUser);
         secondBox.add(viewUsers);
@@ -86,7 +92,7 @@ public class ModifyUserView extends VerticalLayout {
     }
     public void buttonListeners(){
         addUser.addClickListener(e-> {
-            user.insertUser(new User(username.getValue(),password.getValue(),roles.getValue()));
+            user.insertUser(new User(0,username.getValue(),password.getValue(),email.getValue(),roles.getValue()));
             gridUpdate();
         });
         deleteUser.addClickListener(e->{
@@ -96,6 +102,10 @@ public class ModifyUserView extends VerticalLayout {
         viewUsers.addClickListener(e-> gridUpdate());
         editUsername.addClickListener(e->{
             user.updateUsername(username.getValue(),getSelected());
+            gridUpdate();
+        });
+        editEmail.addClickListener(e->{
+            user.updateEmail(email.getValue(),getSelected());
             gridUpdate();
         });
         editPassword.addClickListener(e->{

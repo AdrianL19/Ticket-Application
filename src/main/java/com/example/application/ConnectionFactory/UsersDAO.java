@@ -18,10 +18,12 @@ public class UsersDAO {
             PreparedStatement statement = dbConnection.prepareStatement("select * from users");
             ResultSet result = statement.executeQuery();
             while(result.next()){
+                int id = result.getInt("userID");
                 String username= result.getString("username");
                 String password = result.getString("passwordUser");
                 String role = result.getString("role");
-                users.add(new User(username,password,role));
+                String email = result.getString("email");
+                users.add(new User(id,username,password,email,role));
             }
         }catch ( SQLException throwables) {
             throwables.printStackTrace();
@@ -33,10 +35,11 @@ public class UsersDAO {
     public void insertUser(User ex){
         Connection dbConnection = ConnectionFactory.getConnection();
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("insert into users(username,passwordUser,role) values (?,?,?)");
+            PreparedStatement statement = dbConnection.prepareStatement("insert into users(username,email,passwordUser,role) values (?,?,?,?)");
             statement.setString(1,ex.getUsername());
-            statement.setString(2,ex.getPassword());
-            statement.setString(3,ex.getRole());
+            statement.setString(2,ex.getEmail());
+            statement.setString(3,ex.getPassword());
+            statement.setString(4,ex.getRole());
             statement.executeUpdate();
 
         }catch ( SQLException throwables) {
@@ -78,6 +81,20 @@ public class UsersDAO {
         Connection dbConnection = ConnectionFactory.getConnection();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("update users set passwordUser = ? where username = ?");
+            statement.setString(1,update);
+            statement.setString(2,username);
+            statement.executeUpdate();
+
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
+    }
+    public void updateEmail(String update,String username){
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("update users set email = ? where username = ?");
             statement.setString(1,update);
             statement.setString(2,username);
             statement.executeUpdate();

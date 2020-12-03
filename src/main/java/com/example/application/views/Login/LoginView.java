@@ -53,9 +53,9 @@ public class LoginView extends VerticalLayout {
     public void checkLogin() {
         UsersDAO users = new UsersDAO();
         List<User> listUsers = users.getUsers();
-        User temp = new User(name.getValue(),password.getValue(),null);
+        User temp = new User(0,name.getValue(),password.getValue(),null,null);
         for(User i : listUsers){
-            if((i.getUsername().equals(temp.getUsername()))& (i.getPassword().equals(temp.getPassword())) ) {
+            if((i.getUsername().equals(temp.getUsername()) | i.getEmail().equals(temp.getUsername()))& (i.getPassword().equals(temp.getPassword())) ) {
                 this.currentUser = i;
                 loginSuccesfull = true;
                 req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();

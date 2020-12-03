@@ -4,9 +4,12 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 
 @Route(value = "welcomeUser", layout = MainViewUser.class)
-@PageTitle("About")
+@PageTitle("Welcome User")
+@Theme(value = Lumo.class,variant = Lumo.DARK)
 public class WelcomeUser extends Div {
 
     public WelcomeUser() {

@@ -22,6 +22,7 @@ import java.util.List;
 public class RegisterPage extends VerticalLayout {
 
     private TextField name = new TextField("Username");
+    private TextField email = new TextField("Email");
     private PasswordField password= new PasswordField("Password");
     private PasswordField retypePassword = new PasswordField("Retype Password");
 
@@ -30,14 +31,14 @@ public class RegisterPage extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
         Button button = new Button("Register user", event -> registerUser()) ;
-        add(name,password,retypePassword,button);
+        add(name,email,password,retypePassword,button);
     }
 
     private void registerUser() {
         UsersDAO users = new UsersDAO();
 
         if(password.getValue().equals(retypePassword.getValue())){
-            User temp = new User(name.getValue(),password.getValue(),"User");
+            User temp = new User(0,name.getValue(),password.getValue(),email.getValue(),"User");
             users.insertUser(temp);
             UI.getCurrent().navigate("");
             Notification.show("Registration complete!");
