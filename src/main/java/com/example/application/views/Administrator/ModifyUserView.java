@@ -13,8 +13,12 @@ import com.vaadin.flow.data.selection.SingleSelect;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinService;
+import com.vaadin.flow.server.VaadinServletRequest;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +36,8 @@ public class ModifyUserView extends VerticalLayout {
     private Button deleteUser = new Button("Delete User");
     private Button viewUsers = new Button("View Users");
     private Grid<User> grid;
+    public HttpSession session;
+    public HttpServletRequest req;
     public ModifyUserView(){
         getStyle().set("border", "1px solid #9E9E9E");
         setPadding(false);
@@ -41,6 +47,11 @@ public class ModifyUserView extends VerticalLayout {
         buttonsBox();
         buttonListeners();
         gridSetup();
+
+        req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
+        session = req.getSession();
+        User  currentUser = (User) session.getAttribute("user");
+        System.out.println(currentUser);
     }
     public void gridSetup(){
         grid = new Grid<>();

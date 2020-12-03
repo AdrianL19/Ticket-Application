@@ -27,7 +27,7 @@ import com.example.application.views.about.AboutViewUser;
  * The main view is a top-level placeholder for other views.
  */
 @JsModule("./styles/shared-styles.js")
-@CssImport("./styles/views/main/admin-view.css")
+@CssImport("./styles/views/main/main-view.css")
 public class MainViewAdministrator extends AppLayout {
 
     private final Tabs menu;
