@@ -25,15 +25,15 @@ import java.util.Locale;
     @PageTitle("Admin Schedule")
     public class ScheduleDrivers extends VerticalLayout {
         private H1 title = new H1("Admin Schedule");
-        private ComboBox<String> viewDrivers = new ComboBox<String>();
-        private Button viewScheduleofDriver = new Button("View Schedule of the Driver selected");
-        private Button viewScheduleofAllDrivers = new Button("View Schedule of all Drivers");
-        private DateTimePicker placeholderDateTimePicker = new DateTimePicker();
-        private TimePicker timePicker = new TimePicker();
-        private Button addInterval = new Button("Add Schedule");
-        private Button deleteInterval = new Button("Delete Schedule ");
-        private UsersDAO user = new UsersDAO();
-        private ScheduleDAO schedule = new ScheduleDAO();
+        private final ComboBox<String> viewDrivers = new ComboBox<String>();
+        private final Button viewScheduleofDriver = new Button("View Schedule of the Driver selected");
+        private final Button viewScheduleofAllDrivers = new Button("View Schedule of all Drivers");
+        private final DateTimePicker placeholderDateTimePicker = new DateTimePicker();
+        private final TimePicker timePicker = new TimePicker();
+        private final Button addInterval = new Button("Add Schedule");
+        private final Button deleteInterval = new Button("Delete Schedule ");
+        private final UsersDAO user = new UsersDAO();
+        private final ScheduleDAO schedule = new ScheduleDAO();
         private Grid<Schedule> grid;
         public ScheduleDrivers() {
             setJustifyContentMode(JustifyContentMode.CENTER);
@@ -51,10 +51,13 @@ import java.util.Locale;
             deleteInterval.addClickListener(e->deleteWork());
         }
         public void addWork(){
-
+            String[] split = placeholderDateTimePicker.getValue().toString().split( "T");
+            System.out.println(split[0]+" " +split[1]);
+            Schedule temp = new Schedule(viewDrivers.getValue(),split[0],split[1]+":00",timePicker.getValue().toString()+":00");
+            schedule.insertSchedule(temp);
         }
         public void deleteWork(){
-
+            schedule.deleteUser(viewDrivers.getValue());
         }
         public void selectDriver(){
             HorizontalLayout layout = new HorizontalLayout();

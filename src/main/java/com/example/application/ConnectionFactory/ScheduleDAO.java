@@ -56,4 +56,35 @@ public class ScheduleDAO {
         }
         return schedule;
     }
+    public void insertSchedule(Schedule ex){
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("insert into orar(username,dataOrar,oraStart,oraEnd) values (?,?,?,?)");
+            statement.setString(1,ex.getUsername());
+            statement.setString(2,ex.getDate());
+            statement.setString(3,ex.getTimeStart());
+            statement.setString(4,ex.getTimeEnd());
+            statement.executeUpdate();
+
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
+
+    }
+    public void deleteUser(String username){
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("delete from orar where username = ?");
+            statement.setString(1,username);
+            statement.executeUpdate();
+
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
+
+    }
 }
