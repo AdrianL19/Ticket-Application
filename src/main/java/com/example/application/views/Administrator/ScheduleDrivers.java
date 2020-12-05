@@ -10,21 +10,24 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.timepicker.TimePicker;
+import com.vaadin.flow.data.selection.SingleSelect;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-
-import java.nio.channels.SelectableChannel;
-import java.time.chrono.ChronoLocalDateTime;
+import com.vaadin.flow.server.VaadinService;
+import com.vaadin.flow.server.VaadinServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
 @Route(value = "scheduleAdmin",layout = MainViewAdministrator.class)
     @PageTitle("Admin Schedule")
     public class ScheduleDrivers extends VerticalLayout {
         private H1 title = new H1("Admin Schedule");
+        private boolean bool;
         private final ComboBox<String> viewDrivers = new ComboBox<String>();
         private final Button viewScheduleofDriver = new Button("View Schedule of the Driver selected");
         private final Button viewScheduleofAllDrivers = new Button("View Schedule of all Drivers");
@@ -36,19 +39,45 @@ import java.util.Locale;
         private final ScheduleDAO schedule = new ScheduleDAO();
         private Grid<Schedule> grid;
         public ScheduleDrivers() {
-            setJustifyContentMode(JustifyContentMode.CENTER);
-            setAlignItems(Alignment.CENTER);
-            add(title);
-            selectDriver();
-            modifySchedule();
-            driverGrid();
-            buttonConfig();
+            HttpServletRequest req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
+            HttpSession session = req.getSession();
+            try {
+                User currentUser = (User) session.getAttribute("user");
+                currentUser.getUsername();
+                setJustifyContentMode(JustifyContentMode.CENTER);
+                setAlignItems(Alignment.CENTER);
+                add(title);
+                selectDriver();
+                modifySchedule();
+                driverGrid();
+                buttonConfig();
+            }catch (Exception e){
+                Notification.show("Please login first!",3000, Notification.Position.TOP_CENTER);
+                UI.getCurrent().navigate("http://localhost:8080/");
+            }
+
         }
         public void buttonConfig(){
             viewScheduleofAllDrivers.addClickListener(e-> updateGrid1());
             viewScheduleofDriver.addClickListener(e->updateGrid2(viewDrivers.getValue()));
-            addInterval.addClickListener(e->addWork());
-            deleteInterval.addClickListener(e->deleteWork());
+            addInterval.addClickListener(e->{
+                addWork();
+                if(bool){
+                    updateGrid2(viewDrivers.getValue());
+                }else{
+                    updateGrid1();
+                }
+
+            });
+            deleteInterval.addClickListener(e->{
+                deleteWork();
+                if(bool){
+                    String[] split = getSelected().split(" ");
+                    updateGrid2(split[0]);
+                }else{
+                    updateGrid1();
+                }
+            });
         }
         public void addWork(){
             String[] split = placeholderDateTimePicker.getValue().toString().split( "T");
@@ -57,7 +86,7 @@ import java.util.Locale;
             schedule.insertSchedule(temp);
         }
         public void deleteWork(){
-            schedule.deleteUser(viewDrivers.getValue());
+            schedule.deleteUser(getSelected());
         }
         public void selectDriver(){
             HorizontalLayout layout = new HorizontalLayout();
@@ -90,8 +119,14 @@ import java.util.Locale;
         }
         public void updateGrid1(){
                 grid.setItems(schedule.getUsers());
+                bool=false;
         }
         public void updateGrid2(String username){
             grid.setItems(schedule.getScheduleDriver(username));
+            bool=true;
     }
+        public String getSelected(){
+        SingleSelect<Grid<Schedule>,Schedule> selection = grid.asSingleSelect();
+        return selection.getValue().getUsername() +" "+ selection.getValue().getDate() +" "+ selection.getValue().getTimeStart() +" "+ selection.getValue().getTimeEnd();
     }
+}

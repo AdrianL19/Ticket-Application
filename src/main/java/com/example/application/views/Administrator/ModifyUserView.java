@@ -2,10 +2,12 @@ package com.example.application.views.Administrator;
 
 import com.example.application.ConnectionFactory.UsersDAO;
 import com.example.application.Model.User;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -38,17 +40,27 @@ public class ModifyUserView extends VerticalLayout {
     private Button deleteUser = new Button("Delete User");
     private Button viewUsers = new Button("View Users");
     private Grid<User> grid;
-    public HttpSession session;
-    public HttpServletRequest req;
+
     public ModifyUserView(){
-        getStyle().set("border", "1px solid #9E9E9E");
-        setPadding(false);
-        setMargin(true);
-        setSpacing(true);
-        userInfosBox();
-        buttonsBox();
-        buttonListeners();
-        gridSetup();
+        HttpServletRequest req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
+        HttpSession session = req.getSession();
+        try {
+            User currentUser = (User) session.getAttribute("user");
+            currentUser.getUsername();
+            setJustifyContentMode(JustifyContentMode.CENTER);
+            setAlignItems(Alignment.CENTER);
+            getStyle().set("border", "1px solid #9E9E9E");
+            setPadding(false);
+            setMargin(true);
+            setSpacing(true);
+            userInfosBox();
+            buttonsBox();
+            buttonListeners();
+            gridSetup();
+        }catch (Exception e){
+            Notification.show("Please login first!",3000, Notification.Position.TOP_CENTER);
+            UI.getCurrent().navigate("http://localhost:8080/");
+        }
 
     }
     public void gridSetup(){

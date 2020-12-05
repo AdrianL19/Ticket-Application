@@ -7,6 +7,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H4;
 
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -27,17 +28,21 @@ public class WelcomeAdmin extends VerticalLayout {
     private Button redirectUserButton = new Button("Administrate USERS",event -> UI.getCurrent().navigate("modifyUser"));
     private Button redirectScheduleButton = new Button("Administrate Driver's Schedule",event -> UI.getCurrent().navigate("scheduleAdmin"));
     private Button redirectVehicleButton = new Button("Administrate Vehicles",event -> UI.getCurrent().navigate("modifyVehicle"));
-    public HttpSession session;
-    public HttpServletRequest req;
+
     public WelcomeAdmin() {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
-        req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
-        session = req.getSession();
-        User currentUser = (User) session.getAttribute("user");
-        title.setText("Welcome Administrator, "+ currentUser.getUsername());
-        setId("about-view");
-        add(title,redirectUser,redirectUserButton,redirectSchedule,redirectScheduleButton,redirectVehicle,redirectVehicleButton);
+        HttpServletRequest req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
+        HttpSession session = req.getSession();
+        try{
+            User currentUser = (User) session.getAttribute("user");
+            title.setText("Welcome Administrator, "+ currentUser.getUsername());
+            setId("about-view");
+            add(title,redirectUser,redirectUserButton,redirectSchedule,redirectScheduleButton,redirectVehicle,redirectVehicleButton);
+        } catch (Exception e) {
+            Notification.show("Please login first!",3000, Notification.Position.TOP_CENTER);
+            UI.getCurrent().navigate("http://localhost:8080/");
+        }
 
     }
 

@@ -76,8 +76,13 @@ public class ScheduleDAO {
     public void deleteUser(String username){
         Connection dbConnection = ConnectionFactory.getConnection();
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("delete from orar where username = ?");
-            statement.setString(1,username);
+            String[] split = username.split(" ");
+            PreparedStatement statement = dbConnection.prepareStatement("delete from orar where username = ? and dataOrar = ? and oraStart = ? and oraEnd = ?");
+            System.out.println(split[0]+split[1]+split[2]+split[3]);
+            statement.setString(1,split[0]);
+            statement.setString(2,split[1]);
+            statement.setString(3,split[2]);
+            statement.setString(4,split[3]);
             statement.executeUpdate();
 
         }catch ( SQLException throwables) {
