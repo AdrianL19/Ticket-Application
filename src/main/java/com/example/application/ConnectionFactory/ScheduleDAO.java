@@ -21,9 +21,10 @@ public class ScheduleDAO {
             while(result.next()){
                 String username= result.getString("username");
                 String date = result.getString("dataOrar");
+                String[] split = date.split(" ");
                 String oraStart = result.getString("oraStart");
                 String oraEnd = result.getString("oraEnd");
-                schedule.add(new Schedule(username,date,oraStart,oraEnd));
+                schedule.add(new Schedule(username,split[0],oraStart,oraEnd));
             }
         }catch ( SQLException throwables) {
             throwables.printStackTrace();
@@ -41,10 +42,11 @@ public class ScheduleDAO {
             while(result.next()){
                 String username= result.getString("username");
                 String date = result.getString("dataOrar");
+                String[] split = date.split(" ");
                 String oraStart = result.getString("oraStart");
                 String oraEnd = result.getString("oraEnd");
                 if(username.equals(driver)){
-                    schedule.add(new Schedule(username,date,oraStart,oraEnd));
+                    schedule.add(new Schedule(username,split[0],oraStart,oraEnd));
                 }
             }
         }catch ( SQLException throwables) {
