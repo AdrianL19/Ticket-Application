@@ -9,7 +9,7 @@ import com.vaadin.flow.theme.lumo.Lumo;
 
 @Route(value = "welcomeUser", layout = MainViewUser.class)
 @PageTitle("Welcome User")
-@Theme(value = Lumo.class,variant = Lumo.DARK)
+
 public class WelcomeUser extends Div {
 
     public WelcomeUser() {

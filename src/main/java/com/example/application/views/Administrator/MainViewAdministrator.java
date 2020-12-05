@@ -86,7 +86,8 @@ public class MainViewAdministrator extends AppLayout {
         return new Tab[]{
                 createTab("Welcome", WelcomeAdmin.class),
                 createTab("Modify", ModifyUserView.class),
-                createTab("Driver's schedule", ScheduleDrivers.class)
+                createTab("Driver's schedule", ScheduleDrivers.class),
+                createTab("Vehicles",ModifyVehicle.class)
         };
     }
 
