@@ -2,13 +2,13 @@ package com.example.application.Model;
 
 import java.util.Objects;
 
-public class Route {
+public class Rute {
     private String destinatie;
     private String plecare;
     private float tarif;
     private String vehicleNumber;
 
-    public Route(String destinatie, String plecare, float tarif, String vehicleNumber) {
+    public Rute(String destinatie, String plecare, float tarif, String vehicleNumber) {
         this.destinatie = destinatie;
         this.plecare = plecare;
         this.tarif = tarif;
@@ -51,11 +51,11 @@ public class Route {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Route route = (Route) o;
-        return Float.compare(route.tarif, tarif) == 0 &&
-                Objects.equals(destinatie, route.destinatie) &&
-                Objects.equals(plecare, route.plecare) &&
-                Objects.equals(vehicleNumber, route.vehicleNumber);
+        Rute rute = (Rute) o;
+        return Float.compare(rute.tarif, tarif) == 0 &&
+                Objects.equals(destinatie, rute.destinatie) &&
+                Objects.equals(plecare, rute.plecare) &&
+                Objects.equals(vehicleNumber, rute.vehicleNumber);
     }
 
     @Override

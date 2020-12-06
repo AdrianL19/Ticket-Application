@@ -96,7 +96,6 @@ public class ModifyUserView extends VerticalLayout {
         secondBox.add(viewUsers);
         add(secondBox);
     }
-
     public void comboBoxInit(){
         roles.setItems("Administrator","User","Driver");
         roles.setValue("Administrator");

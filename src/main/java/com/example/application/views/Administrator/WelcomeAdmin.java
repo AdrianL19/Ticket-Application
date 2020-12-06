@@ -29,7 +29,7 @@ public class WelcomeAdmin extends VerticalLayout {
     private Button redirectUserButton = new Button("Administrate USERS",event -> UI.getCurrent().navigate("modifyUser"));
     private Button redirectScheduleButton = new Button("Administrate Driver's Schedule",event -> UI.getCurrent().navigate("scheduleAdmin"));
     private Button redirectVehicleButton = new Button("Administrate Vehicles",event -> UI.getCurrent().navigate("modifyVehicle"));
-    private Button redirectRouteButton = new Button("Administrate Vehicles",event -> UI.getCurrent().navigate("modifyRoute"));
+    private Button redirectRouteButton = new Button("Administrate Routes",event -> UI.getCurrent().navigate("modifyRoute"));
 
     public WelcomeAdmin() {
         setJustifyContentMode(JustifyContentMode.CENTER);

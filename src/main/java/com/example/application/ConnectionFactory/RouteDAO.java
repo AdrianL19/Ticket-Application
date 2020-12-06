@@ -1,7 +1,6 @@
 package com.example.application.ConnectionFactory;
 
-import com.example.application.Model.Route;
-import com.example.application.Model.Vehicle;
+import com.example.application.Model.Rute;
 import com.vaadin.flow.component.notification.Notification;
 
 import java.sql.Connection;
@@ -12,31 +11,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RouteDAO {
-    List<Route> routes = new ArrayList<>();
-    public List<Route> getVehicles(){
-        routes.clear();
+    List<Rute> rutes = new ArrayList<>();
+    public List<Rute> getRoutes(){
+        rutes.clear();
         Connection dbConnection = ConnectionFactory.getConnection();
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("select * from vehicle");
+            PreparedStatement statement = dbConnection.prepareStatement("select * from rute");
             ResultSet result = statement.executeQuery();
             while(result.next()){
                 String destinatie = result.getString("destinatie");
                 String plecare = result.getString("plecare");
                 float tarif = result.getFloat("tarif");
                 String vehicleNumber = result.getString("vehicleNumber");
-                Route temp = new Route(destinatie,plecare,tarif,vehicleNumber);
-                routes.add(temp);
+                Rute temp = new Rute(destinatie,plecare,tarif,vehicleNumber);
+                rutes.add(temp);
             }
         }catch ( SQLException throwables) {
             throwables.printStackTrace();
         }finally {
             ConnectionFactory.close(dbConnection);
         }
-        return routes;
+        return rutes;
     }
-    public void insertVehicle(Route temp){
+    public void insertRoute(Rute temp){
         boolean verify = true;
-        for(Route i : this.getVehicles()){
+        for(Rute i : this.getRoutes()){
             if(i.equals(temp)){
                 verify=false;
             }
@@ -44,7 +43,7 @@ public class RouteDAO {
         if(verify){
             Connection dbConnection = ConnectionFactory.getConnection();
             try {
-                PreparedStatement statement = dbConnection.prepareStatement("insert into rute(destiantie,plecare,tarif,vehicleNumber) values (?,?,?,?)");
+                PreparedStatement statement = dbConnection.prepareStatement("insert into rute(destinatie,plecare,tarif,vehicleNumber) values (?,?,?,?)");
                 statement.setString(1,temp.getDestinatie());
                 statement.setString(2,temp.getPlecare());
                 statement.setFloat(3,temp.getTarif());
@@ -61,7 +60,7 @@ public class RouteDAO {
             Notification.show("Route already exists!");
         }
     }
-    public void deleteVehicle(Route temp){
+    public void deleteRoute(Rute temp){
 
         Connection dbConnection = ConnectionFactory.getConnection();
         try {

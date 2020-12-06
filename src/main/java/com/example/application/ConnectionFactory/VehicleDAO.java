@@ -36,6 +36,23 @@ public class VehicleDAO {
         }
         return vehicles;
     }
+    public List<String> getVehicleNumber(){
+        List<String> vehiclesNumber = new ArrayList<>();
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("select * from vehicle");
+            ResultSet result = statement.executeQuery();
+            while(result.next()){
+                String vehicleNumber = result.getString("vehicleNumber");
+                vehiclesNumber.add(vehicleNumber);
+            }
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
+        return vehiclesNumber;
+    }
     public void insertVehicle(Vehicle temp){
         boolean verify = false;
         for(Vehicle i : this.getVehicles()){

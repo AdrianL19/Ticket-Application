@@ -71,7 +71,7 @@ public class ModifyVehicle extends VerticalLayout {
     public void secondLine(){
         grid = new Grid<>();
         grid.addColumn(Vehicle::getId).setHeader("ID");
-        grid.addColumn(Vehicle::getDriver).setHeader("Date");
+        grid.addColumn(Vehicle::getDriver).setHeader("Driver's username");
         grid.addColumn(Vehicle::getNumber).setHeader("Number");
         grid.addColumn(Vehicle::getNumberOfSlots).setHeader("Vehicle Slots");
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
