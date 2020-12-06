@@ -25,9 +25,11 @@ public class WelcomeAdmin extends VerticalLayout {
     private H4 redirectUser = new H4("If you want to add/edit/delete any information about an user press the button below.");
     private H4 redirectSchedule = new H4( "If you want to add/edit/delete any information about a driver's schedule press the button below.");
     private H4 redirectVehicle = new H4( "If you want to add/delete a vehicle press the button below.");
+    private H4 redirectRoute = new H4( "If you want to add/delete a route press the button below.");
     private Button redirectUserButton = new Button("Administrate USERS",event -> UI.getCurrent().navigate("modifyUser"));
     private Button redirectScheduleButton = new Button("Administrate Driver's Schedule",event -> UI.getCurrent().navigate("scheduleAdmin"));
     private Button redirectVehicleButton = new Button("Administrate Vehicles",event -> UI.getCurrent().navigate("modifyVehicle"));
+    private Button redirectRouteButton = new Button("Administrate Vehicles",event -> UI.getCurrent().navigate("modifyRoute"));
 
     public WelcomeAdmin() {
         setJustifyContentMode(JustifyContentMode.CENTER);
@@ -38,7 +40,7 @@ public class WelcomeAdmin extends VerticalLayout {
             User currentUser = (User) session.getAttribute("user");
             title.setText("Welcome Administrator, "+ currentUser.getUsername());
             setId("about-view");
-            add(title,redirectUser,redirectUserButton,redirectSchedule,redirectScheduleButton,redirectVehicle,redirectVehicleButton);
+            add(title,redirectUser,redirectUserButton,redirectSchedule,redirectScheduleButton,redirectVehicle,redirectVehicleButton,redirectRoute,redirectRouteButton);
         } catch (Exception e) {
             Notification.show("Please login first!",3000, Notification.Position.TOP_CENTER);
             UI.getCurrent().navigate("http://localhost:8080/");
