@@ -38,11 +38,12 @@ public class WelcomeAdmin extends VerticalLayout {
         HttpSession session = req.getSession();
         try{
             User currentUser = (User) session.getAttribute("user");
+            if(!currentUser.getRole().equals("Administrator")) throw new Exception();
             title.setText("Welcome Administrator, "+ currentUser.getUsername());
             setId("about-view");
             add(title,redirectUser,redirectUserButton,redirectSchedule,redirectScheduleButton,redirectVehicle,redirectVehicleButton,redirectRoute,redirectRouteButton);
         } catch (Exception e) {
-            Notification.show("Please login first!",3000, Notification.Position.TOP_CENTER);
+            Notification.show("Please login as an administrator first!",3000, Notification.Position.TOP_CENTER);
             UI.getCurrent().navigate("http://localhost:8080/");
         }
 

@@ -37,14 +37,13 @@ public class ModifyRoutes extends VerticalLayout {
     private final Button deleteRoute = new Button("Delete Route");
     private final Button viewRoutes = new Button("View Route");
     private final DatePicker datePicker = new DatePicker();
-
     private Grid<Rute> grid;
     public ModifyRoutes(){
         HttpServletRequest req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
         HttpSession session = req.getSession();
         try {
             User currentUser = (User) session.getAttribute("user");
-            currentUser.getUsername();
+            if(!currentUser.getRole().equals("Administrator")) throw new Exception();
             H1 title = new H1("Admin Routes");
             setJustifyContentMode(JustifyContentMode.CENTER);
             setAlignItems(Alignment.CENTER);
@@ -54,7 +53,7 @@ public class ModifyRoutes extends VerticalLayout {
             gridConfig();
             buttonConfig();
         }catch (Exception e){
-            Notification.show("Please login first!",3000, Notification.Position.TOP_CENTER);
+            Notification.show("Please login as an administrator first!",3000, Notification.Position.TOP_CENTER);
             UI.getCurrent().navigate("http://localhost:8080/");
         }
     }
@@ -76,10 +75,10 @@ public class ModifyRoutes extends VerticalLayout {
     }
     public void gridConfig(){
         grid = new Grid<>();
-        grid.addColumn(Rute::getData).setHeader("Data");
-        grid.addColumn(Rute::getDestinatie).setHeader("Destinatie");
-        grid.addColumn(Rute::getPlecare).setHeader("Plecare");
-        grid.addColumn(Rute::getTarif).setHeader("Tarif");
+        grid.addColumn(Rute::getData).setHeader("Date");
+        grid.addColumn(Rute::getPlecare).setHeader("Departure");
+        grid.addColumn(Rute::getDestinatie).setHeader("Destination");
+        grid.addColumn(Rute::getTarif).setHeader("Cost");
         grid.addColumn(Rute::getVehicleNumber).setHeader("Vehicle's Number");
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         grid.getColumns().forEach(col->col.setAutoWidth(true));

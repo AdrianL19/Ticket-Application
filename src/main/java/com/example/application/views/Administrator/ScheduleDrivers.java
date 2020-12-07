@@ -43,7 +43,7 @@ import java.util.Locale;
             HttpSession session = req.getSession();
             try {
                 User currentUser = (User) session.getAttribute("user");
-                currentUser.getUsername();
+                if(!currentUser.getRole().equals("Administrator")) throw new Exception();
                 setJustifyContentMode(JustifyContentMode.CENTER);
                 setAlignItems(Alignment.CENTER);
                 add(title);
@@ -52,7 +52,7 @@ import java.util.Locale;
                 driverGrid();
                 buttonConfig();
             }catch (Exception e){
-                Notification.show("Please login first!",3000, Notification.Position.TOP_CENTER);
+                Notification.show("Please login as an administrator first!",3000, Notification.Position.TOP_CENTER);
                 UI.getCurrent().navigate("http://localhost:8080/");
             }
 

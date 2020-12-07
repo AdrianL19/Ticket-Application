@@ -46,7 +46,7 @@ public class ModifyUserView extends VerticalLayout {
         HttpSession session = req.getSession();
         try {
             User currentUser = (User) session.getAttribute("user");
-            currentUser.getUsername();
+            if(!currentUser.getRole().equals("Administrator")) throw new Exception();
             setJustifyContentMode(JustifyContentMode.CENTER);
             setAlignItems(Alignment.CENTER);
             getStyle().set("border", "1px solid #9E9E9E");
@@ -58,7 +58,7 @@ public class ModifyUserView extends VerticalLayout {
             buttonListeners();
             gridSetup();
         }catch (Exception e){
-            Notification.show("Please login first!",3000, Notification.Position.TOP_CENTER);
+            Notification.show("Please login as an administrator first!",3000, Notification.Position.TOP_CENTER);
             UI.getCurrent().navigate("http://localhost:8080/");
         }
 

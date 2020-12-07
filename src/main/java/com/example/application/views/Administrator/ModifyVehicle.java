@@ -42,7 +42,7 @@ public class ModifyVehicle extends VerticalLayout {
         HttpSession session = req.getSession();
         try {
             User currentUser = (User) session.getAttribute("user");
-            currentUser.getUsername();
+            if(!currentUser.getRole().equals("Administrator")) throw new Exception();
             setJustifyContentMode(JustifyContentMode.CENTER);
             H1 title = new H1("Admin Vehicles");
             add(title);
@@ -51,7 +51,7 @@ public class ModifyVehicle extends VerticalLayout {
             secondLine();
             buttonSetup();
         }catch (Exception e){
-            Notification.show("Please login first!",3000, Notification.Position.TOP_CENTER);
+            Notification.show("Please login as an administrator first!",3000, Notification.Position.TOP_CENTER);
             UI.getCurrent().navigate("http://localhost:8080/");
         }
 
