@@ -8,6 +8,7 @@ import com.example.application.Model.Vehicle;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
@@ -35,6 +36,8 @@ public class ModifyRoutes extends VerticalLayout {
     private final Button addRoute = new Button("Add Route");
     private final Button deleteRoute = new Button("Delete Route");
     private final Button viewRoutes = new Button("View Route");
+    private final DatePicker datePicker = new DatePicker();
+
     private Grid<Rute> grid;
     public ModifyRoutes(){
         HttpServletRequest req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
@@ -61,8 +64,9 @@ public class ModifyRoutes extends VerticalLayout {
         plecare.setPlaceholder("Plecare");
         tarif.setPlaceholder("Tarif");
         vehicleNumber.setPlaceholder("Vehicle Drivers");
+        datePicker.setPlaceholder("Data");
         vehicleNumber.setItems(vehicle.getVehicleNumber());
-        layout.add(destinatie,plecare,tarif,vehicleNumber);
+        layout.add(datePicker,destinatie,plecare,tarif,vehicleNumber);
         add(layout);
     }
     public void secondLine(){
@@ -72,6 +76,7 @@ public class ModifyRoutes extends VerticalLayout {
     }
     public void gridConfig(){
         grid = new Grid<>();
+        grid.addColumn(Rute::getData).setHeader("Data");
         grid.addColumn(Rute::getDestinatie).setHeader("Destinatie");
         grid.addColumn(Rute::getPlecare).setHeader("Plecare");
         grid.addColumn(Rute::getTarif).setHeader("Tarif");
@@ -85,7 +90,8 @@ public class ModifyRoutes extends VerticalLayout {
     }
     public void buttonConfig(){
         addRoute.addClickListener(e->{
-            Rute temp = new Rute(destinatie.getValue(),plecare.getValue(),Float.parseFloat(tarif.getValue()),vehicleNumber.getValue());
+            System.out.println(datePicker.getValue().toString());
+            Rute temp = new Rute(datePicker.getValue().toString(),destinatie.getValue(),plecare.getValue(),Float.parseFloat(tarif.getValue()),vehicleNumber.getValue());
             rute.insertRoute(temp);
             gridUpdate();
         });

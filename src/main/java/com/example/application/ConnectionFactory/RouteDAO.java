@@ -19,11 +19,12 @@ public class RouteDAO {
             PreparedStatement statement = dbConnection.prepareStatement("select * from rute");
             ResultSet result = statement.executeQuery();
             while(result.next()){
+                String data = result.getString("data");
                 String destinatie = result.getString("destinatie");
                 String plecare = result.getString("plecare");
                 float tarif = result.getFloat("tarif");
                 String vehicleNumber = result.getString("vehicleNumber");
-                Rute temp = new Rute(destinatie,plecare,tarif,vehicleNumber);
+                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber);
                 rutes.add(temp);
             }
         }catch ( SQLException throwables) {
@@ -43,11 +44,12 @@ public class RouteDAO {
         if(verify){
             Connection dbConnection = ConnectionFactory.getConnection();
             try {
-                PreparedStatement statement = dbConnection.prepareStatement("insert into rute(destinatie,plecare,tarif,vehicleNumber) values (?,?,?,?)");
-                statement.setString(1,temp.getDestinatie());
-                statement.setString(2,temp.getPlecare());
-                statement.setFloat(3,temp.getTarif());
-                statement.setString(4,temp.getVehicleNumber());
+                PreparedStatement statement = dbConnection.prepareStatement("insert into rute(data,destinatie,plecare,tarif,vehicleNumber) values (?,?,?,?,?)");
+                statement.setString(1, temp.getData());
+                statement.setString(2,temp.getDestinatie());
+                statement.setString(3,temp.getPlecare());
+                statement.setFloat(4,temp.getTarif());
+                statement.setString(5,temp.getVehicleNumber());
                 statement.executeUpdate();
 
             }catch ( SQLException throwables) {

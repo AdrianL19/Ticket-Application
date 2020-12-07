@@ -3,12 +3,14 @@ package com.example.application.Model;
 import java.util.Objects;
 
 public class Rute {
+    private String data;
     private String destinatie;
     private String plecare;
     private float tarif;
     private String vehicleNumber;
 
-    public Rute(String destinatie, String plecare, float tarif, String vehicleNumber) {
+    public Rute(String data,String destinatie, String plecare, float tarif, String vehicleNumber) {
+        this.data=data;
         this.destinatie = destinatie;
         this.plecare = plecare;
         this.tarif = tarif;
@@ -53,6 +55,7 @@ public class Rute {
         if (o == null || getClass() != o.getClass()) return false;
         Rute rute = (Rute) o;
         return Float.compare(rute.tarif, tarif) == 0 &&
+                Objects.equals(data,rute.data) &&
                 Objects.equals(destinatie, rute.destinatie) &&
                 Objects.equals(plecare, rute.plecare) &&
                 Objects.equals(vehicleNumber, rute.vehicleNumber);
@@ -61,5 +64,13 @@ public class Rute {
     @Override
     public int hashCode() {
         return 0;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 }

@@ -3,8 +3,7 @@ package com.example.application.views.Login;
 
 import com.example.application.ConnectionFactory.UsersDAO;
 import com.example.application.Model.User;
-import com.example.application.views.Administrator.WelcomeAdmin;
-import com.vaadin.flow.component.ComponentUtil;
+
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -19,10 +18,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.VaadinServletRequest;
-import com.vaadin.flow.server.VaadinSession;
-import com.vaadin.flow.server.WrappedHttpSession;
 
-import javax.net.ssl.HandshakeCompletedEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -40,16 +36,16 @@ public class LoginView extends VerticalLayout {
     private H3 register= new H3("Don't have an account? Click the button below to create an account!");
     public HttpSession session;
     public HttpServletRequest req;
-
     public LoginView() {
-
+        req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
+        session = req.getSession();
+        session.removeAttribute("user");
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
         Button button = new Button("Login", event -> checkLogin()) ;
         Button button2 = new Button("Register Now", event -> UI.getCurrent().navigate("register")) ;
         add(titlu,name,password,button,register,button2);
     }
-
     public void checkLogin() {
         UsersDAO users = new UsersDAO();
         List<User> listUsers = users.getUsers();
