@@ -8,13 +8,15 @@ public class Rute {
     private String plecare;
     private float tarif;
     private String vehicleNumber;
+    private int numberofSlots;
 
-    public Rute(String data,String destinatie, String plecare, float tarif, String vehicleNumber) {
+    public Rute(String data,String destinatie, String plecare, float tarif, String vehicleNumber,int number) {
         this.data=data;
         this.destinatie = destinatie;
         this.plecare = plecare;
         this.tarif = tarif;
         this.vehicleNumber = vehicleNumber;
+        this.numberofSlots = number;
     }
 
     public String getDestinatie() {
@@ -55,7 +57,8 @@ public class Rute {
         if (o == null || getClass() != o.getClass()) return false;
         Rute rute = (Rute) o;
         return Float.compare(rute.tarif, tarif) == 0 &&
-                Objects.equals(data,rute.data) &&
+                numberofSlots == rute.numberofSlots &&
+                Objects.equals(data, rute.data) &&
                 Objects.equals(destinatie, rute.destinatie) &&
                 Objects.equals(plecare, rute.plecare) &&
                 Objects.equals(vehicleNumber, rute.vehicleNumber);
@@ -72,5 +75,13 @@ public class Rute {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public int getNumberofSlots() {
+        return numberofSlots;
+    }
+
+    public void setNumberofSlots(int numberofSlots) {
+        this.numberofSlots = numberofSlots;
     }
 }

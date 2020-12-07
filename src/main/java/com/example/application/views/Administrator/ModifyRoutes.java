@@ -47,6 +47,7 @@ public class ModifyRoutes extends VerticalLayout {
             H1 title = new H1("Admin Routes");
             setJustifyContentMode(JustifyContentMode.CENTER);
             setAlignItems(Alignment.CENTER);
+            setSizeFull();
             add(title);
             firstLine();
             secondLine();
@@ -79,20 +80,29 @@ public class ModifyRoutes extends VerticalLayout {
         grid.addColumn(Rute::getPlecare).setHeader("Departure");
         grid.addColumn(Rute::getDestinatie).setHeader("Destination");
         grid.addColumn(Rute::getTarif).setHeader("Cost");
+        grid.addColumn(Rute::getNumberofSlots).setHeader("Number of slots");
         grid.addColumn(Rute::getVehicleNumber).setHeader("Vehicle's Number");
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         grid.getColumns().forEach(col->col.setAutoWidth(true));
         add(grid);
+
     }
     public void gridUpdate(){
         grid.setItems(rute.getRoutes());
     }
     public void buttonConfig(){
         addRoute.addClickListener(e->{
-            System.out.println(datePicker.getValue().toString());
-            Rute temp = new Rute(datePicker.getValue().toString(),destinatie.getValue(),plecare.getValue(),Float.parseFloat(tarif.getValue()),vehicleNumber.getValue());
-            rute.insertRoute(temp);
-            gridUpdate();
+
+            for(Vehicle i : vehicle.getVehicles()){
+                if(i.getNumber().equals(vehicleNumber.getValue())){
+                    System.out.println(i.getNumber()+" "+vehicleNumber.getValue());
+                    System.out.println(i.getNumberOfSlots());
+                    Rute temp = new Rute(datePicker.getValue().toString(),destinatie.getValue(),plecare.getValue(),Float.parseFloat(tarif.getValue()),vehicleNumber.getValue(),i.getNumberOfSlots());
+                    rute.insertRoute(temp);
+                    gridUpdate();
+                }
+            }
+
         });
         deleteRoute.addClickListener(e->{
             rute.deleteRoute(getSelected());

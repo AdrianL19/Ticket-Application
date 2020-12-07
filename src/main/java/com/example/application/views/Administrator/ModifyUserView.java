@@ -49,7 +49,7 @@ public class ModifyUserView extends VerticalLayout {
             if(!currentUser.getRole().equals("Administrator")) throw new Exception();
             setJustifyContentMode(JustifyContentMode.CENTER);
             setAlignItems(Alignment.CENTER);
-            getStyle().set("border", "1px solid #9E9E9E");
+            setSizeFull();
             setPadding(false);
             setMargin(true);
             setSpacing(true);

@@ -44,6 +44,7 @@ public class ModifyVehicle extends VerticalLayout {
             User currentUser = (User) session.getAttribute("user");
             if(!currentUser.getRole().equals("Administrator")) throw new Exception();
             setJustifyContentMode(JustifyContentMode.CENTER);
+            setSizeFull();
             H1 title = new H1("Admin Vehicles");
             add(title);
             setAlignItems(Alignment.CENTER);
@@ -72,8 +73,8 @@ public class ModifyVehicle extends VerticalLayout {
         grid = new Grid<>();
         grid.addColumn(Vehicle::getId).setHeader("ID");
         grid.addColumn(Vehicle::getDriver).setHeader("Driver's username");
+        grid.addColumn(Vehicle::getNumberOfSlots).setHeader("Number of slots");
         grid.addColumn(Vehicle::getNumber).setHeader("Number");
-        grid.addColumn(Vehicle::getNumberOfSlots).setHeader("Vehicle Slots");
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         grid.getColumns().forEach(col->col.setAutoWidth(true));
         add(grid);

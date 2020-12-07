@@ -44,6 +44,7 @@ import java.util.Locale;
             try {
                 User currentUser = (User) session.getAttribute("user");
                 if(!currentUser.getRole().equals("Administrator")) throw new Exception();
+                setSizeFull();
                 setJustifyContentMode(JustifyContentMode.CENTER);
                 setAlignItems(Alignment.CENTER);
                 add(title);
