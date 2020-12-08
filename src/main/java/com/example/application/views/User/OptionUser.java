@@ -1,5 +1,4 @@
 package com.example.application.views.User;
-
 import com.example.application.ConnectionFactory.BileteDAO;
 import com.example.application.ConnectionFactory.RouteDAO;
 import com.example.application.ConnectionFactory.VehicleDAO;
@@ -10,7 +9,6 @@ import com.example.application.Model.Vehicle;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.charts.model.Title;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -26,7 +24,6 @@ import com.vaadin.flow.server.VaadinServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 
 @Route(value = "optionUser", layout = MainViewUser.class)
 @PageTitle("Select Page")
@@ -44,6 +41,7 @@ public class OptionUser extends VerticalLayout {
     private Button pay = new Button("Continue");
     private Button goback = new Button("Go back");
     private Rute currentRoute;
+    private User currentUser;
     private String currentDriver;
     private BileteDAO bilete = new BileteDAO();
     private RouteDAO route = new RouteDAO();
@@ -53,7 +51,7 @@ public class OptionUser extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
         try{
-            User currentUser = (User) session.getAttribute("user");
+            currentUser = (User) session.getAttribute("user");
             if(!currentUser.getRole().equals("User")) throw new Exception();
             configVisualization();
             buttonConfig();
@@ -104,14 +102,13 @@ public class OptionUser extends VerticalLayout {
         layout.add(pay,goback);
         add(layout);
     }
-
     private void buyTicket() {
         route.updateSlots(currentRoute,numberField.getValue().intValue());
-       //Bilet temp = new Bilet(0,currentRoute.getData(),currentRoute.getDestinatie(),currentRoute.getPlecare(),currentRoute.getTarif(),currentRoute.getVehicleNumber(),currentDriver);
-       // bilete.insertBilet(temp);
-
+        for(int i = 0; i < numberField.getValue().intValue();i++){
+            Bilet temp = new Bilet(0,currentRoute.getData(),currentRoute.getDestinatie(),currentRoute.getPlecare(),currentRoute.getTarif(),currentRoute.getVehicleNumber(),currentDriver,currentUser.getUsername());
+            bilete.insertBilet(temp);
+        }
     }
-
     private void remainingSlots(){
         for(Vehicle i : vehicle.getVehicles()){
             currentRoute = (Rute) session.getAttribute("selectedRoute");

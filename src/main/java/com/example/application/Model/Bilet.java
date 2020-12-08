@@ -9,8 +9,18 @@ public class Bilet {
     private String vehicleNumber;
     private String username;
 
+    public String getBuyer() {
+        return buyer;
+    }
 
-    public Bilet(int id, String data, String destinatie, String plecare, float tarif, String vehicleNumber, String username) {
+    public void setBuyer(String buyer) {
+        this.buyer = buyer;
+    }
+
+    private String buyer;
+
+
+    public Bilet(int id, String data, String destinatie, String plecare, float tarif, String vehicleNumber, String username,String buyer) {
         this.id = id;
         this.data = data;
         this.destinatie = destinatie;
@@ -18,6 +28,7 @@ public class Bilet {
         this.tarif = tarif;
         this.vehicleNumber = vehicleNumber;
         this.username = username;
+        this.buyer=buyer;
     }
 
     public int getId() {
