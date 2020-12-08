@@ -71,6 +71,7 @@ public class BuyView extends VerticalLayout {
         grid.addColumn(Rute::getDestinatie).setHeader("Destination");
         grid.addColumn(Rute::getTarif).setHeader("Cost");
         grid.addColumn(Rute::getVehicleNumber).setHeader("Vehicle's Number");
+        grid.addColumn(Rute::getNumberofSlots).setHeader("Slots available");
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         grid.getColumns().forEach(col->col.setAutoWidth(true));
         add(grid);
@@ -91,10 +92,16 @@ public class BuyView extends VerticalLayout {
             if(getSelected()==null){
                 Notification.show("Please select a route from the list below", 3000, Notification.Position.TOP_CENTER);
             }else{
-                HttpServletRequest req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
-                HttpSession session = req.getSession();
-                session.setAttribute("selectedRoute",getSelected());
-                UI.getCurrent().navigate("optionUser");
+                if(getSelected().getNumberofSlots()>0){
+                    HttpServletRequest req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
+                    HttpSession session = req.getSession();
+                    session.setAttribute("selectedRoute",getSelected());
+                    UI.getCurrent().navigate("optionUser");
+                }else{
+                    Notification.show("You selected a route with no empty slots.Please select another route or try another date.", 3000, Notification.Position.TOP_CENTER);
+                }
+
+
             }
         });
     }

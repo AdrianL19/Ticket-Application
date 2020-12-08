@@ -92,7 +92,6 @@ public class ModifyRoutes extends VerticalLayout {
     }
     public void buttonConfig(){
         addRoute.addClickListener(e->{
-
             for(Vehicle i : vehicle.getVehicles()){
                 if(i.getNumber().equals(vehicleNumber.getValue())){
                     System.out.println(i.getNumber()+" "+vehicleNumber.getValue());

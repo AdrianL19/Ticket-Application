@@ -160,7 +160,6 @@ public class RouteDAO {
                 statement.setFloat(5,temp.getTarif());
                 statement.setString(6,temp.getVehicleNumber());
                 statement.executeUpdate();
-
             }catch ( SQLException throwables) {
                 throwables.printStackTrace();
             }finally {
@@ -188,5 +187,24 @@ public class RouteDAO {
             ConnectionFactory.close(dbConnection);
         }
 
+    }
+    public void updateSlots(Rute ruta,int nr){
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("update rute set numberofPlaces = ?  where data = ? and destinatie = ? and plecare = ? and tarif = ? and vehicleNumber = ? and numberofPlaces =? " );
+            statement.setInt(1,ruta.getNumberofSlots()-nr);
+            statement.setString(2,ruta.getData());
+            statement.setString(3,ruta.getDestinatie());
+            statement.setString(4,ruta.getPlecare());
+            statement.setFloat(5,ruta.getTarif());
+            statement.setString(6, ruta.getVehicleNumber());
+            statement.setInt(7,ruta.getNumberofSlots());
+            statement.executeUpdate();
+
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
     }
 }
