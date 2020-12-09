@@ -89,6 +89,7 @@ public class MainViewUser extends AppLayout {
         return new Tab[]{
         createTab("Welcome", WelcomeUser.class),
         createTab("Tickets",BuyView.class),
+        createTab("History",History.class),
         createTab("Routes", RoutesView.class),
         createTab("Gallery", GalleryView.class),
         createTab("About", AboutViewUser.class)};

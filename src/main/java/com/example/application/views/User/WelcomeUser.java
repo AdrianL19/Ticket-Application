@@ -27,6 +27,8 @@ public class WelcomeUser extends VerticalLayout {
         private Button redirectRouteButton = new Button("View Routes", event -> UI.getCurrent().navigate("routesUser"));
         private Button redirectVehicleButton = new Button("View Vehicles", event -> UI.getCurrent().navigate("vehicleUser"));
         private Button redirectAboutButton = new Button( "About/Contact",event -> UI.getCurrent().navigate("about"));
+        private H4 redirectHistory = new H4( "If you want to see the history of your purchases press the button bellow.");
+        private Button redirectHistoryButton = new Button("View History", event -> UI.getCurrent().navigate("historyUser"));
 
 
     public WelcomeUser() {
@@ -39,7 +41,7 @@ public class WelcomeUser extends VerticalLayout {
             if(!currentUser.getRole().equals("User")) throw new Exception();
             title.setText("Welcome User, "+ currentUser.getUsername());
             setId("about-view");
-            add(title,buyTicket,buyTicketButton,redirectRoutes,redirectRouteButton,redirectVehicle,redirectVehicleButton,redirectAbout,redirectAboutButton);
+            add(title,buyTicket,buyTicketButton,redirectRoutes,redirectRouteButton,redirectVehicle,redirectVehicleButton,redirectHistory,redirectHistoryButton,redirectAbout,redirectAboutButton);
         }catch(Exception e){
             Notification.show("Please login as an user first!",3000, Notification.Position.TOP_CENTER);
             UI.getCurrent().navigate("http://localhost:8080/");

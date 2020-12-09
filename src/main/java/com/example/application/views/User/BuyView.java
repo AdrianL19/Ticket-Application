@@ -60,7 +60,7 @@ public class BuyView extends VerticalLayout {
         departure.setItems(rute.getDepartures());
         destination.setPlaceholder("Destination");
         destination.setItems(rute.getDestinations());
-        add(title,progressBar,datePicker,departure,destination,searchRoutes);
+        add(title,datePicker,departure,destination,searchRoutes);
         gridConfig();
     }
     public void gridConfig(){

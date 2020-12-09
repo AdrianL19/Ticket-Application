@@ -65,12 +65,12 @@ public class OptionUser extends VerticalLayout {
     public void configVisualization(){
         progressBar.setValue(0.33);
         radioGroup.setLabel("Payment/Book mode");
-        radioGroup.setItems("Book route"," Pay Cash","Pay with Credit Card");
+        radioGroup.setItems("Book route","Pay cash","Pay with Credit Card");
         radioGroup.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
         numberField.setHasControls(true);
         numberField.setStep(1.0);
         numberField.setMin(1);
-        add(title,progressBar);
+        add(title);
         remainingSlots();
         add(layout);
         add(radioGroup);
@@ -89,9 +89,6 @@ public class OptionUser extends VerticalLayout {
            buttonInside.addClickListener(event->{
                 buyTicket();
                 notification.close();
-                Notification.show("Your command has been sent. Check email for confirmation.", 10, Notification.Position.TOP_CENTER);
-                UI.getCurrent().navigate("welcomeUser");
-
            });
            notification.open();
 
@@ -103,11 +100,51 @@ public class OptionUser extends VerticalLayout {
         add(layout);
     }
     private void buyTicket() {
-        route.updateSlots(currentRoute,numberField.getValue().intValue());
-        for(int i = 0; i < numberField.getValue().intValue();i++){
-            Bilet temp = new Bilet(0,currentRoute.getData(),currentRoute.getDestinatie(),currentRoute.getPlecare(),currentRoute.getTarif(),currentRoute.getVehicleNumber(),currentDriver,currentUser.getUsername());
-            bilete.insertBilet(temp);
+        if(numberField.getValue()!=null){
+            if(radioGroup.getValue()!=null){
+                switch (radioGroup.getValue()){
+                    case "Book route":
+                        if(numberField.getValue().intValue()<3){
+                            route.updateSlots(currentRoute,numberField.getValue().intValue());
+                            for(int i = 0; i < numberField.getValue().intValue();i++){
+                                Bilet temp = new Bilet(0,currentRoute.getData(),currentRoute.getDestinatie(),currentRoute.getPlecare(),currentRoute.getTarif(),currentRoute.getVehicleNumber(),currentDriver,currentUser.getUsername());
+                                bilete.insertBilet(temp);
+                            }
+                            Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);
+                            UI.getCurrent().navigate("welcomeUser");
+                        }else{
+                            Notification.show("You can only book maximum 2 tickets", 3000, Notification.Position.TOP_CENTER);
+                        }
+                        break;
+                    case "Pay cash":
+                        if(numberField.getValue().intValue()<3){
+                            route.updateSlots(currentRoute,numberField.getValue().intValue());
+                            for(int i = 0; i < numberField.getValue().intValue();i++){
+                                Bilet temp = new Bilet(0,currentRoute.getData(),currentRoute.getDestinatie(),currentRoute.getPlecare(),currentRoute.getTarif(),currentRoute.getVehicleNumber(),currentDriver,currentUser.getUsername());
+                                bilete.insertBilet(temp);
+                            }
+                            Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);
+                            UI.getCurrent().navigate("welcomeUser");
+                        }else{
+                            Notification.show("You can only buy with cash maximum 2 tickets", 3000, Notification.Position.TOP_CENTER);
+                        }
+                        break;
+                    case "Pay with Credit Card":
+                        session.setAttribute("number",  numberField.getValue().intValue());
+                        UI.getCurrent().navigate("buyCard");
+                        break;
+                    default: Notification.show("Something went wrong, please try again!",3000, Notification.Position.TOP_CENTER);
+                    break;
+                }
+            }else{
+                Notification.show("Please select a payment method", 3000, Notification.Position.TOP_CENTER);
+            }
+        }else{
+            Notification.show("Please select the number of tickets", 3000, Notification.Position.TOP_CENTER);
         }
+
+
+
     }
     private void remainingSlots(){
         for(Vehicle i : vehicle.getVehicles()){
