@@ -30,6 +30,8 @@ public class WelcomeAdmin extends VerticalLayout {
     private Button redirectScheduleButton = new Button("Administrate Driver's Schedule",event -> UI.getCurrent().navigate("scheduleAdmin"));
     private Button redirectVehicleButton = new Button("Administrate Vehicles",event -> UI.getCurrent().navigate("modifyVehicle"));
     private Button redirectRouteButton = new Button("Administrate Routes",event -> UI.getCurrent().navigate("modifyRoute"));
+    private H4 redirectTicket = new H4( "If you want to see all the tickets sold or the revenue click the button below.");
+    private Button redirectTicketButton = new Button("View tickets or revenue",event -> UI.getCurrent().navigate("ticketsAdmin"));
 
     public WelcomeAdmin() {
         setJustifyContentMode(JustifyContentMode.CENTER);
@@ -41,7 +43,7 @@ public class WelcomeAdmin extends VerticalLayout {
             if(!currentUser.getRole().equals("Administrator")) throw new Exception();
             title.setText("Welcome Administrator, "+ currentUser.getUsername());
             setId("about-view");
-            add(title,redirectUser,redirectUserButton,redirectSchedule,redirectScheduleButton,redirectVehicle,redirectVehicleButton,redirectRoute,redirectRouteButton);
+            add(title,redirectUser,redirectUserButton,redirectTicket,redirectTicketButton,redirectSchedule,redirectScheduleButton,redirectVehicle,redirectVehicleButton,redirectRoute,redirectRouteButton);
         } catch (Exception e) {
             Notification.show("Please login as an administrator first!",3000, Notification.Position.TOP_CENTER);
             UI.getCurrent().navigate("http://localhost:8080/");

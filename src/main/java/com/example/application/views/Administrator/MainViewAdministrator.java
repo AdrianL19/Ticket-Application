@@ -2,15 +2,10 @@ package com.example.application.views.Administrator;
 
 import java.util.Optional;
 
-import com.example.application.views.User.GalleryView;
-import com.example.application.views.User.RoutesView;
-import com.example.application.views.User.WelcomeUser;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Anchor;
@@ -24,7 +19,6 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
-import com.example.application.views.about.AboutViewUser;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -91,9 +85,11 @@ public class MainViewAdministrator extends AppLayout {
         return new Tab[]{
                 createTab("Welcome", WelcomeAdmin.class),
                 createTab("Modify", ModifyUserView.class),
+                createTab("Tickets",ViewTickets.class),
                 createTab("Driver's schedule", ScheduleDrivers.class),
                 createTab("Vehicles",ModifyVehicle.class),
                 createTab("Routes",ModifyRoutes.class)
+
         };
     }
 
