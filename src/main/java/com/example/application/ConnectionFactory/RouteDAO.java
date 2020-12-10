@@ -117,6 +117,7 @@ public class RouteDAO {
         }
         return rutes;
     }
+
     public List<Rute> getSearch(String departure,String destination){
         rutes.clear();
         Connection dbConnection = ConnectionFactory.getConnection();
@@ -124,6 +125,30 @@ public class RouteDAO {
             PreparedStatement statement = dbConnection.prepareStatement("select * from rute where plecare = ? and destinatie = ?");
             statement.setString(1,departure);
             statement.setString(2,destination);
+            ResultSet result = statement.executeQuery();
+            while(result.next()){
+                String data = result.getString("data");
+                String destinatie = result.getString("destinatie");
+                String plecare = result.getString("plecare");
+                float tarif = result.getFloat("tarif");
+                String vehicleNumber = result.getString("vehicleNumber");
+                int number = result.getInt("numberofPlaces");
+                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number);
+                rutes.add(temp);
+            }
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
+        return rutes;
+    }
+    public List<Rute> getSearchbyDriver(String driver){
+        rutes.clear();
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("select * from rute where vehicleNumber = ?");
+            statement.setString(1,driver);
             ResultSet result = statement.executeQuery();
             while(result.next()){
                 String data = result.getString("data");

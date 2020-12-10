@@ -56,6 +56,29 @@ public class ScheduleDAO {
         }
         return schedule;
     }
+    public List<Schedule> getScheduleDate(String dateT){
+        schedule.clear();
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("select * from orar");
+            ResultSet result = statement.executeQuery();
+            while(result.next()){
+                String username= result.getString("username");
+                String date = result.getString("dataOrar");
+                String[] split = date.split(" ");
+                String oraStart = result.getString("oraStart");
+                String oraEnd = result.getString("oraEnd");
+                if(split[0].equals(dateT)){
+                    schedule.add(new Schedule(username,split[0],oraStart,oraEnd));
+                }
+            }
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
+        return schedule;
+    }
     public void insertSchedule(Schedule ex){
         Connection dbConnection = ConnectionFactory.getConnection();
         try {

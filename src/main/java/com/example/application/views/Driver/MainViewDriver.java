@@ -10,6 +10,7 @@ import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -20,6 +21,8 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
+
+import javax.swing.text.View;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -49,14 +52,17 @@ public class MainViewDriver extends AppLayout {
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
         layout.add(new DrawerToggle());
         viewTitle = new H1();
+        Anchor logout = new Anchor("http://localhost:8080/","Logout");
         layout.add(viewTitle);
-        layout.add(new Image("images/user.svg", "Avatar"));
+        layout.expand(viewTitle);
+        layout.add(logout);
         return layout;
     }
 
     private Component createDrawerContent(Tabs menu) {
         VerticalLayout layout = new VerticalLayout();
         layout.setSizeFull();
+        layout.getThemeList().set("dark", true);
         layout.setPadding(false);
         layout.setSpacing(false);
         layout.getThemeList().set("spacing-s", true);
@@ -82,6 +88,8 @@ public class MainViewDriver extends AppLayout {
     private Component[] createMenuItems() {
         return new Tab[]{
                 createTab("Welcome", WelcomeDriver.class),
+                createTab("View Schedule",ViewSchedule.class),
+                createTab("View Passengers on Route",ViewPassengers.class)
                 };
     }
 
