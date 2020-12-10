@@ -133,11 +133,11 @@ public class OptionUser extends VerticalLayout {
                         if(numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
                             session.setAttribute("number",  numberField.getValue().intValue());
                             UI.getCurrent().navigate("buyCard");
-                            break;
                         }else{
-                            System.out.println("You are trying to buy more tickets than existing slots for that route.");
-                        }
+                            Notification.show("You are trying to buy more tickets than existing slots for that route.");
 
+                        }
+                        break;
                     default: Notification.show("Something went wrong, please try again!",3000, Notification.Position.TOP_CENTER);
                     break;
                 }
