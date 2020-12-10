@@ -104,7 +104,7 @@ public class OptionUser extends VerticalLayout {
             if(radioGroup.getValue()!=null){
                 switch (radioGroup.getValue()){
                     case "Book route":
-                        if(numberField.getValue().intValue()<3){
+                        if(numberField.getValue().intValue()<3 && numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
                             route.updateSlots(currentRoute,numberField.getValue().intValue());
                             for(int i = 0; i < numberField.getValue().intValue();i++){
                                 Bilet temp = new Bilet(0,currentRoute.getData(),currentRoute.getDestinatie(),currentRoute.getPlecare(),currentRoute.getTarif(),currentRoute.getVehicleNumber(),currentDriver,currentUser.getUsername());
@@ -113,11 +113,11 @@ public class OptionUser extends VerticalLayout {
                             Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);
                             UI.getCurrent().navigate("welcomeUser");
                         }else{
-                            Notification.show("You can only book maximum 2 tickets", 3000, Notification.Position.TOP_CENTER);
+                            Notification.show("You can only book maximum 2 tickets or you are trying to buy more tickets that slots existing.", 3000, Notification.Position.TOP_CENTER);
                         }
                         break;
                     case "Pay cash":
-                        if(numberField.getValue().intValue()<3){
+                        if(numberField.getValue().intValue()<3 && numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
                             route.updateSlots(currentRoute,numberField.getValue().intValue());
                             for(int i = 0; i < numberField.getValue().intValue();i++){
                                 Bilet temp = new Bilet(0,currentRoute.getData(),currentRoute.getDestinatie(),currentRoute.getPlecare(),currentRoute.getTarif(),currentRoute.getVehicleNumber(),currentDriver,currentUser.getUsername());
@@ -126,13 +126,18 @@ public class OptionUser extends VerticalLayout {
                             Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);
                             UI.getCurrent().navigate("welcomeUser");
                         }else{
-                            Notification.show("You can only buy with cash maximum 2 tickets", 3000, Notification.Position.TOP_CENTER);
+                            Notification.show("You can only book maximum 2 tickets or you are trying to buy more tickets that slots existing", 3000, Notification.Position.TOP_CENTER);
                         }
                         break;
                     case "Pay with Credit Card":
-                        session.setAttribute("number",  numberField.getValue().intValue());
-                        UI.getCurrent().navigate("buyCard");
-                        break;
+                        if(numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
+                            session.setAttribute("number",  numberField.getValue().intValue());
+                            UI.getCurrent().navigate("buyCard");
+                            break;
+                        }else{
+                            System.out.println("You are trying to buy more tickets than existing slots for that route.");
+                        }
+
                     default: Notification.show("Something went wrong, please try again!",3000, Notification.Position.TOP_CENTER);
                     break;
                 }

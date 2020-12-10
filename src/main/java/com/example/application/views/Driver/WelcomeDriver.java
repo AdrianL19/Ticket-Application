@@ -26,7 +26,7 @@ public class WelcomeDriver extends VerticalLayout {
     private H4 redirectSchedule = new H4( "If you want to view your schedule press the button below.");
     private Button redirectScheduleButton = new Button( "View Schedule", event -> UI.getCurrent().navigate("scheduleDriver"));
     private H4 redirectPassengers = new H4( "If you want to view your passengers information press the button below.");
-    private Button redirectPassengersButton = new Button( "View Schedule", event -> UI.getCurrent().navigate("passDriver"));
+    private Button redirectPassengersButton = new Button( "View Passengers", event -> UI.getCurrent().navigate("passDriver"));
     public HttpSession session;
     public HttpServletRequest req;
     public WelcomeDriver() {

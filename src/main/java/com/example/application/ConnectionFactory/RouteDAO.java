@@ -109,6 +109,7 @@ public class RouteDAO {
                 String vehicleNumber = result.getString("vehicleNumber");
                 int number = result.getInt("numberofPlaces");
                 Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number);
+                rutes.add(temp);
             }
         }catch ( SQLException throwables) {
             throwables.printStackTrace();

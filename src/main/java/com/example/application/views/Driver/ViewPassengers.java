@@ -36,11 +36,12 @@ public class ViewPassengers extends VerticalLayout {
     private Button searchRoutes = new Button("View my routes");
     private Button nextPage = new Button("Continue",new Icon(VaadinIcon.EXIT));
     private Grid<Rute> grid;
+    private HttpServletRequest req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
+    private HttpSession session = req.getSession();
     public ViewPassengers(){
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
-        HttpServletRequest req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
-        HttpSession session = req.getSession();
+
         try{
             currentUser = (User) session.getAttribute("user");
             if(!currentUser.getRole().equals("Driver")) throw new Exception();
@@ -65,7 +66,6 @@ public class ViewPassengers extends VerticalLayout {
         grid.addColumn(Rute::getDestinatie).setHeader("Destination");
         grid.addColumn(Rute::getTarif).setHeader("Cost");
         grid.addColumn(Rute::getVehicleNumber).setHeader("Vehicle's Number");
-        grid.addColumn(Rute::getNumberofSlots).setHeader("Slots available");
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         grid.getColumns().forEach(col->col.setAutoWidth(true));
         add(grid);
@@ -75,6 +75,7 @@ public class ViewPassengers extends VerticalLayout {
             for(Vehicle i : vehicle.getVehicles()){
                 if(i.getDriver().equals(currentUser.getUsername())){
                     grid.setItems(rute.getSearchbyDriver(i.getNumber()));
+
                 }
             }
             nextPage.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
@@ -85,6 +86,7 @@ public class ViewPassengers extends VerticalLayout {
             if(getSelected()==null){
                 Notification.show("Please select a route from the list below", 3000, Notification.Position.TOP_CENTER);
             }else{
+                session.setAttribute("ruta",getSelected());
                 UI.getCurrent().navigate("passNumber");
             }
         });

@@ -83,4 +83,33 @@ public class BileteDAO {
         }
         return list;
     }
+    public List<Bilet> viewBiletebyNumber(String username,String vehicleNumberr,String dataa){
+        list.clear();
+        Connection dbConnection = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("select * from bilete where username = ? and vehicleNumber =? and data = ?");
+            statement.setString(1,username);
+            statement.setString(2,vehicleNumberr);
+            statement.setString(3,dataa);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                int id = result.getInt("id");
+                String data = result.getString("data");
+                String destinatie = result.getString("destinatie");
+                String plecare = result.getString("plecare");
+                float tarif = result.getFloat("tarif");
+                String vehicleNumber = result.getString("vehicleNumber");
+                String driverusername = result.getString("username");
+                String buyer = result.getString("buyer");
+                Bilet temp = new Bilet(id,data,destinatie,plecare,tarif,vehicleNumber,driverusername,buyer);
+                list.add(temp);
+            }
+
+        }catch ( SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            ConnectionFactory.close(dbConnection);
+        }
+        return list;
+    }
 }
