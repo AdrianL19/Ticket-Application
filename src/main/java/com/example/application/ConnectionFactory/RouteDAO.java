@@ -23,10 +23,12 @@ public class RouteDAO {
                 String data = result.getString("data");
                 String destinatie = result.getString("destinatie");
                 String plecare = result.getString("plecare");
+                String oraStart = result.getString("oraStart");
+                String oraEnd = result.getString("oraEnd");
                 float tarif = result.getFloat("tarif");
                 String vehicleNumber = result.getString("vehicleNumber");
                 int number = result.getInt("numberofPlaces");
-                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number);
+                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number,oraEnd,oraStart);
                 rutes.add(temp);
             }
         }catch ( SQLException throwables) {
@@ -81,10 +83,12 @@ public class RouteDAO {
                 String data = result.getString("data");
                 String destinatie = result.getString("destinatie");
                 String plecare = result.getString("plecare");
+                String oraStart = result.getString("oraStart");
+                String oraEnd = result.getString("oraEnd");
                 float tarif = result.getFloat("tarif");
                 String vehicleNumber = result.getString("vehicleNumber");
                 int number = result.getInt("numberofPlaces");
-                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number);
+                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number,oraEnd,oraStart);
                 rutes.add(temp);
             }
         }catch ( SQLException throwables) {
@@ -105,10 +109,12 @@ public class RouteDAO {
                 String data = result.getString("data");
                 String destinatie = result.getString("destinatie");
                 String plecare = result.getString("plecare");
+                String oraStart = result.getString("oraStart");
+                String oraEnd = result.getString("oraEnd");
                 float tarif = result.getFloat("tarif");
                 String vehicleNumber = result.getString("vehicleNumber");
                 int number = result.getInt("numberofPlaces");
-                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number);
+                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number,oraEnd,oraStart);
                 rutes.add(temp);
             }
         }catch ( SQLException throwables) {
@@ -131,10 +137,12 @@ public class RouteDAO {
                 String data = result.getString("data");
                 String destinatie = result.getString("destinatie");
                 String plecare = result.getString("plecare");
+                String oraStart = result.getString("oraStart");
+                String oraEnd = result.getString("oraEnd");
                 float tarif = result.getFloat("tarif");
                 String vehicleNumber = result.getString("vehicleNumber");
                 int number = result.getInt("numberofPlaces");
-                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number);
+                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number,oraEnd,oraStart);
                 rutes.add(temp);
             }
         }catch ( SQLException throwables) {
@@ -155,10 +163,12 @@ public class RouteDAO {
                 String data = result.getString("data");
                 String destinatie = result.getString("destinatie");
                 String plecare = result.getString("plecare");
+                String oraStart = result.getString("oraStart");
+                String oraEnd = result.getString("oraEnd");
                 float tarif = result.getFloat("tarif");
                 String vehicleNumber = result.getString("vehicleNumber");
                 int number = result.getInt("numberofPlaces");
-                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number);
+                Rute temp = new Rute(data,destinatie,plecare,tarif,vehicleNumber,number,oraEnd,oraStart);
                 rutes.add(temp);
             }
         }catch ( SQLException throwables) {
@@ -171,20 +181,23 @@ public class RouteDAO {
     public void insertRoute(Rute temp){
         boolean verify = true;
         for(Rute i : this.getRoutes()){
-            if(i.equals(temp)){
-                verify=false;
+            if (i.equals(temp)) {
+                verify = false;
+                break;
             }
         }
         if(verify){
             Connection dbConnection = ConnectionFactory.getConnection();
             try {
-                PreparedStatement statement = dbConnection.prepareStatement("insert into rute(data,destinatie,plecare,numberofPlaces,tarif,vehicleNumber) values (?,?,?,?,?,?)");
+                PreparedStatement statement = dbConnection.prepareStatement("insert into rute(data,destinatie,plecare,oraStart,oraEnd,numberofPlaces,tarif,vehicleNumber) values (?,?,?,?,?,?,?,?)");
                 statement.setString(1, temp.getData());
                 statement.setString(2,temp.getDestinatie());
                 statement.setString(3,temp.getPlecare());
-                statement.setInt(4,temp.getNumberofSlots());
-                statement.setFloat(5,temp.getTarif());
-                statement.setString(6,temp.getVehicleNumber());
+                statement.setString(4,temp.getOraPlecare());
+                statement.setString(5,temp.getOraAjungere());
+                statement.setInt(6,temp.getNumberofSlots());
+                statement.setFloat(7,temp.getTarif());
+                statement.setString(8,temp.getVehicleNumber());
                 statement.executeUpdate();
             }catch ( SQLException throwables) {
                 throwables.printStackTrace();
@@ -200,11 +213,13 @@ public class RouteDAO {
 
         Connection dbConnection = ConnectionFactory.getConnection();
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("delete from rute where destinatie = ? and plecare = ? and tarif = ? and vehicleNumber = ?");
+            PreparedStatement statement = dbConnection.prepareStatement("delete from rute where destinatie = ? and plecare = ? and tarif = ? and vehicleNumber = ? and oraStart=? and oraEnd=?");
             statement.setString(1,temp.getDestinatie());
             statement.setString(2,temp.getPlecare());
             statement.setFloat(3,temp.getTarif());
             statement.setString(4,temp.getVehicleNumber());
+            statement.setString(5,temp.getOraPlecare());
+            statement.setString(6,temp.getOraPlecare());
             statement.executeUpdate();
 
         }catch ( SQLException throwables) {

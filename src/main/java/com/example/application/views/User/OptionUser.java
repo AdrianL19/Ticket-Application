@@ -107,7 +107,7 @@ public class OptionUser extends VerticalLayout {
                         if(numberField.getValue().intValue()<3 && numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
                             route.updateSlots(currentRoute,numberField.getValue().intValue());
                             for(int i = 0; i < numberField.getValue().intValue();i++){
-                                Bilet temp = new Bilet(0,currentRoute.getData(),currentRoute.getDestinatie(),currentRoute.getPlecare(),currentRoute.getTarif(),currentRoute.getVehicleNumber(),currentDriver,currentUser.getUsername());
+                                Bilet temp = new Bilet(0, currentRoute.getData(), currentRoute.getDestinatie(), currentRoute.getPlecare(), currentRoute.getTarif(), currentRoute.getVehicleNumber(), currentDriver, currentUser.getUsername(),currentRoute.getOraAjungere(),currentRoute.getOraPlecare());
                                 bilete.insertBilet(temp);
                             }
                             Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);
@@ -120,7 +120,7 @@ public class OptionUser extends VerticalLayout {
                         if(numberField.getValue().intValue()<3 && numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
                             route.updateSlots(currentRoute,numberField.getValue().intValue());
                             for(int i = 0; i < numberField.getValue().intValue();i++){
-                                Bilet temp = new Bilet(0,currentRoute.getData(),currentRoute.getDestinatie(),currentRoute.getPlecare(),currentRoute.getTarif(),currentRoute.getVehicleNumber(),currentDriver,currentUser.getUsername());
+                                Bilet temp = new Bilet(0, currentRoute.getData(), currentRoute.getDestinatie(), currentRoute.getPlecare(), currentRoute.getTarif(), currentRoute.getVehicleNumber(), currentDriver, currentUser.getUsername(),currentRoute.getOraAjungere(),currentRoute.getOraPlecare());                                bilete.insertBilet(temp);
                                 bilete.insertBilet(temp);
                             }
                             Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);

@@ -5,6 +5,8 @@ public class Bilet {
     private String data;
     private String destinatie;
     private String plecare;
+    private String oraPlecare;
+    private String oraDestinatie;
     private float tarif;
     private String vehicleNumber;
     private String username;
@@ -20,7 +22,23 @@ public class Bilet {
     private String buyer;
 
 
-    public Bilet(int id, String data, String destinatie, String plecare, float tarif, String vehicleNumber, String username,String buyer) {
+    public String getOraPlecare() {
+        return oraPlecare;
+    }
+
+    public void setOraPlecare(String oraPlecare) {
+        this.oraPlecare = oraPlecare;
+    }
+
+    public String getOraDestinatie() {
+        return oraDestinatie;
+    }
+
+    public void setOraDestinatie(String oraDestinatie) {
+        this.oraDestinatie = oraDestinatie;
+    }
+
+    public Bilet(int id, String data, String destinatie, String plecare, float tarif, String vehicleNumber, String username, String buyer, String orad, String orap) {
         this.id = id;
         this.data = data;
         this.destinatie = destinatie;
@@ -29,6 +47,8 @@ public class Bilet {
         this.vehicleNumber = vehicleNumber;
         this.username = username;
         this.buyer=buyer;
+        this.oraDestinatie=orad;
+        this.oraPlecare=orap;
     }
 
     public int getId() {

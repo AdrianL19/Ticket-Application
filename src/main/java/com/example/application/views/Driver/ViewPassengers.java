@@ -64,6 +64,8 @@ public class ViewPassengers extends VerticalLayout {
         grid.addColumn(Rute::getData).setHeader("Date");
         grid.addColumn(Rute::getPlecare).setHeader("Departure");
         grid.addColumn(Rute::getDestinatie).setHeader("Destination");
+        grid.addColumn(Rute::getOraPlecare).setHeader("Departure time");
+        grid.addColumn(Rute::getOraAjungere).setHeader("Destination time");
         grid.addColumn(Rute::getTarif).setHeader("Cost");
         grid.addColumn(Rute::getVehicleNumber).setHeader("Vehicle's Number");
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);

@@ -14,14 +14,16 @@ public class BileteDAO {
     public void insertBilet(Bilet temp){
         Connection dbConnection = ConnectionFactory.getConnection();
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("insert into bilete(data,destinatie,plecare,tarif,vehicleNumber,username,buyer) values (?,?,?,?,?,?,?)");
+            PreparedStatement statement = dbConnection.prepareStatement("insert into bilete(data,destinatie,plecare,oraStart,oraEnd,tarif,vehicleNumber,username,buyer) values (?,?,?,?,?,?,?,?,?)");
             statement.setString(1, temp.getData());
             statement.setString(2,temp.getDestinatie());
             statement.setString(3,temp.getPlecare());
-            statement.setFloat(4,temp.getTarif());
-            statement.setString(5,temp.getVehicleNumber());
-            statement.setString(6,temp.getUsername());
-            statement.setString(7,temp.getBuyer());
+            statement.setString(4,temp.getOraPlecare());
+            statement.setString(5,temp.getOraDestinatie());
+            statement.setFloat(6,temp.getTarif());
+            statement.setString(7,temp.getVehicleNumber());
+            statement.setString(8,temp.getUsername());
+            statement.setString(9,temp.getBuyer());
             statement.executeUpdate();
 
         }catch ( SQLException throwables) {
@@ -41,11 +43,13 @@ public class BileteDAO {
                 String data = result.getString("data");
                 String destinatie = result.getString("destinatie");
                 String plecare = result.getString("plecare");
+                String oraStart = result.getString("oraStart");
+                String oraEnd = result.getString("oraEnd");
                 float tarif = result.getFloat("tarif");
                 String vehicleNumber = result.getString("vehicleNumber");
                 String driverusername = result.getString("username");
                 String buyer = result.getString("buyer");
-                Bilet temp = new Bilet(id,data,destinatie,plecare,tarif,vehicleNumber,driverusername,buyer);
+                Bilet temp = new Bilet(id,data,destinatie,plecare,tarif,vehicleNumber,driverusername,buyer,oraEnd,oraStart);
                 list.add(temp);
             }
 
@@ -68,11 +72,13 @@ public class BileteDAO {
                 String data = result.getString("data");
                 String destinatie = result.getString("destinatie");
                 String plecare = result.getString("plecare");
+                String oraStart = result.getString("oraStart");
+                String oraEnd = result.getString("oraEnd");
                 float tarif = result.getFloat("tarif");
                 String vehicleNumber = result.getString("vehicleNumber");
                 String driverusername = result.getString("username");
                 String buyer = result.getString("buyer");
-                Bilet temp = new Bilet(id,data,destinatie,plecare,tarif,vehicleNumber,driverusername,buyer);
+                Bilet temp = new Bilet(id,data,destinatie,plecare,tarif,vehicleNumber,driverusername,buyer,oraEnd,oraStart);
                 list.add(temp);
             }
 
@@ -97,11 +103,13 @@ public class BileteDAO {
                 String data = result.getString("data");
                 String destinatie = result.getString("destinatie");
                 String plecare = result.getString("plecare");
+                String oraStart = result.getString("oraStart");
+                String oraEnd = result.getString("oraEnd");
                 float tarif = result.getFloat("tarif");
                 String vehicleNumber = result.getString("vehicleNumber");
                 String driverusername = result.getString("username");
                 String buyer = result.getString("buyer");
-                Bilet temp = new Bilet(id,data,destinatie,plecare,tarif,vehicleNumber,driverusername,buyer);
+                Bilet temp = new Bilet(id,data,destinatie,plecare,tarif,vehicleNumber,driverusername,buyer,oraEnd,oraStart);
                 list.add(temp);
             }
 

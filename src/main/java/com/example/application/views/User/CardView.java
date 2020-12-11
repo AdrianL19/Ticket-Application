@@ -90,7 +90,7 @@ public class CardView extends VerticalLayout {
                         if (!securityCode.getValue().equals("") && verifySecurityCode(securityCode.getValue())) {
                             route.updateSlots(currentRoute, numberofTickets);
                             for (int i = 0; i < numberofTickets; i++) {
-                                Bilet temp = new Bilet(0, currentRoute.getData(), currentRoute.getDestinatie(), currentRoute.getPlecare(), currentRoute.getTarif(), currentRoute.getVehicleNumber(), currentDriver, currentUser.getUsername());
+                                Bilet temp = new Bilet(0, currentRoute.getData(), currentRoute.getDestinatie(), currentRoute.getPlecare(), currentRoute.getTarif(), currentRoute.getVehicleNumber(), currentDriver, currentUser.getUsername(),currentRoute.getOraAjungere(),currentRoute.getOraPlecare());
                                 bilete.insertBilet(temp);
                             }
                             Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);
