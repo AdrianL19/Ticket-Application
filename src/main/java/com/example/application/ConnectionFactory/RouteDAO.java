@@ -124,7 +124,6 @@ public class RouteDAO {
         }
         return rutes;
     }
-
     public List<Rute> getSearch(String departure,String destination){
         rutes.clear();
         Connection dbConnection = ConnectionFactory.getConnection();

@@ -6,6 +6,7 @@ import com.example.application.Model.Bilet;
 import com.example.application.Model.Rute;
 import com.example.application.Model.User;
 import com.example.application.Model.Vehicle;
+import com.example.application.views.Email.Email;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -46,6 +47,7 @@ public class OptionUser extends VerticalLayout {
     private BileteDAO bilete = new BileteDAO();
     private RouteDAO route = new RouteDAO();
     private HorizontalLayout layout = new HorizontalLayout();
+    private int counter;
 
     public OptionUser(){
         setJustifyContentMode(JustifyContentMode.CENTER);
@@ -100,53 +102,68 @@ public class OptionUser extends VerticalLayout {
         add(layout);
     }
     private void buyTicket() {
-        if(numberField.getValue()!=null){
-            if(radioGroup.getValue()!=null){
-                switch (radioGroup.getValue()){
-                    case "Book route":
-                        if(numberField.getValue().intValue()<3 && numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
-                            route.updateSlots(currentRoute,numberField.getValue().intValue());
-                            for(int i = 0; i < numberField.getValue().intValue();i++){
-                                Bilet temp = new Bilet(0, currentRoute.getData(), currentRoute.getDestinatie(), currentRoute.getPlecare(), currentRoute.getTarif(), currentRoute.getVehicleNumber(), currentDriver, currentUser.getUsername(),currentRoute.getOraAjungere(),currentRoute.getOraPlecare());
-                                bilete.insertBilet(temp);
+        try{
+            if(numberField.getValue()!=null){
+                if(radioGroup.getValue()!=null){
+                    switch (radioGroup.getValue()){
+                        case "Book route":
+                            if(numberField.getValue().intValue()<3 && numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
+                                route.updateSlots(currentRoute,numberField.getValue().intValue());
+                                for(int i = 0; i < numberField.getValue().intValue();i++){
+                                    Bilet temp = new Bilet(0, currentRoute.getData(), currentRoute.getDestinatie(), currentRoute.getPlecare(), currentRoute.getTarif(), currentRoute.getVehicleNumber(), currentDriver, currentUser.getUsername(),currentRoute.getOraAjungere(),currentRoute.getOraPlecare());
+                                    bilete.insertBilet(temp);
+                                    Email email = new Email();
+                                    counter = bilete.viewBilete().size();
+                                    email.sendMessage("Comanda Ticket Application " +counter,currentUser.getEmail(),currentRoute.getPlecare().replace(" ",""),currentRoute.getDestinatie().replace(" ",""),currentRoute.getOraPlecare(), currentRoute.getOraAjungere(),String.valueOf(currentRoute.getTarif()),String.valueOf(currentRoute.getNumberofSlots()),currentRoute.getVehicleNumber(),currentDriver);
+                                    session.setAttribute("counter", counter);
+                                }
+                                Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);
+                                UI.getCurrent().navigate("welcomeUser");
+                            }else{
+                                Notification.show("You can only book maximum 2 tickets or you are trying to buy more tickets that slots existing.", 3000, Notification.Position.TOP_CENTER);
                             }
-                            Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);
-                            UI.getCurrent().navigate("welcomeUser");
-                        }else{
-                            Notification.show("You can only book maximum 2 tickets or you are trying to buy more tickets that slots existing.", 3000, Notification.Position.TOP_CENTER);
-                        }
-                        break;
-                    case "Pay cash":
-                        if(numberField.getValue().intValue()<3 && numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
-                            route.updateSlots(currentRoute,numberField.getValue().intValue());
-                            for(int i = 0; i < numberField.getValue().intValue();i++){
-                                Bilet temp = new Bilet(0, currentRoute.getData(), currentRoute.getDestinatie(), currentRoute.getPlecare(), currentRoute.getTarif(), currentRoute.getVehicleNumber(), currentDriver, currentUser.getUsername(),currentRoute.getOraAjungere(),currentRoute.getOraPlecare());                                bilete.insertBilet(temp);
-                                bilete.insertBilet(temp);
+                            break;
+                        case "Pay cash":
+                            if(numberField.getValue().intValue()<3 && numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
+                                route.updateSlots(currentRoute,numberField.getValue().intValue());
+                                for(int i = 0; i < numberField.getValue().intValue();i++){
+                                    Bilet temp = new Bilet(0, currentRoute.getData(), currentRoute.getDestinatie(), currentRoute.getPlecare(), currentRoute.getTarif(), currentRoute.getVehicleNumber(), currentDriver, currentUser.getUsername(),currentRoute.getOraAjungere(),currentRoute.getOraPlecare());                                bilete.insertBilet(temp);
+                                    bilete.insertBilet(temp);
+                                    Email email = new Email();
+                                    counter = bilete.viewBilete().size();
+                                    email.sendMessage("Comanda Ticket Application " +counter,currentUser.getEmail(),currentRoute.getPlecare().replace(" ",""),currentRoute.getDestinatie().replace(" ",""),currentRoute.getOraPlecare(),
+                                    currentRoute.getOraAjungere(),String.valueOf(currentRoute.getTarif()),String.valueOf(currentRoute.getNumberofSlots()),currentRoute.getVehicleNumber(),currentDriver);
+                                    session.setAttribute("counter", counter);
+                                }
+                                Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);
+                                UI.getCurrent().navigate("welcomeUser");
+                            }else{
+                                Notification.show("You can only book maximum 2 tickets or you are trying to buy more tickets that slots existing", 3000, Notification.Position.TOP_CENTER);
                             }
-                            Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);
-                            UI.getCurrent().navigate("welcomeUser");
-                        }else{
-                            Notification.show("You can only book maximum 2 tickets or you are trying to buy more tickets that slots existing", 3000, Notification.Position.TOP_CENTER);
-                        }
-                        break;
-                    case "Pay with Credit Card":
-                        if(numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
-                            session.setAttribute("number",  numberField.getValue().intValue());
-                            UI.getCurrent().navigate("buyCard");
-                        }else{
-                            Notification.show("You are trying to buy more tickets than existing slots for that route.");
+                            break;
+                        case "Pay with Credit Card":
+                            if(numberField.getValue().intValue()<=currentRoute.getNumberofSlots()){
+                                session.setAttribute("number",  numberField.getValue().intValue());
+                                session.setAttribute("counter", counter);
+                                UI.getCurrent().navigate("buyCard");
+                            }else{
+                                Notification.show("You are trying to buy more tickets than existing slots for that route.");
 
-                        }
-                        break;
-                    default: Notification.show("Something went wrong, please try again!",3000, Notification.Position.TOP_CENTER);
-                    break;
+                            }
+                            break;
+                        default: Notification.show("Something went wrong, please try again!",3000, Notification.Position.TOP_CENTER);
+                            break;
+                    }
+                }else{
+                    Notification.show("Please select a payment method", 3000, Notification.Position.TOP_CENTER);
                 }
             }else{
-                Notification.show("Please select a payment method", 3000, Notification.Position.TOP_CENTER);
+                Notification.show("Please select the number of tickets", 3000, Notification.Position.TOP_CENTER);
             }
-        }else{
-            Notification.show("Please select the number of tickets", 3000, Notification.Position.TOP_CENTER);
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
 
 
 

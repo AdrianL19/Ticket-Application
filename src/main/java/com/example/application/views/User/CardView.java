@@ -7,6 +7,7 @@ import com.example.application.Model.Bilet;
 import com.example.application.Model.Rute;
 import com.example.application.Model.User;
 import com.example.application.Model.Vehicle;
+import com.example.application.views.Email.Email;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -25,6 +26,7 @@ import com.vaadin.flow.server.VaadinServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Route(value = "buyCard")
 @PageTitle("Buy Ticket")
@@ -42,6 +44,7 @@ public class CardView extends VerticalLayout {
     private BileteDAO bilete = new BileteDAO();
     private String currentDriver;
     private float pret;
+    private int counter;
     private int numberofTickets;
     private HttpServletRequest req = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
     private HttpSession session = req.getSession();
@@ -55,10 +58,10 @@ public class CardView extends VerticalLayout {
             numberofTickets = (int) session.getAttribute("number");
             currentRoute = (Rute) session.getAttribute("selectedRoute");
             pret = numberofTickets * currentRoute.getTarif();
+            counter = (int) session.getAttribute("counter");
+            System.out.println(counter);
             remainingSlots();
             configVisualization();
-
-
         } catch (Exception e) {
             Notification.show("Please login as an user first!", 3000, Notification.Position.TOP_CENTER);
             UI.getCurrent().navigate("http://localhost:8080/");
@@ -78,7 +81,7 @@ public class CardView extends VerticalLayout {
         month.setItems(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
         year.setLabel("Date");
         year.setPlaceholder("Year");
-        year.setItems(2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030);
+        year.setItems(2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030);
         layout.add(month, year);
         add(securityCode);
 
@@ -92,6 +95,14 @@ public class CardView extends VerticalLayout {
                             for (int i = 0; i < numberofTickets; i++) {
                                 Bilet temp = new Bilet(0, currentRoute.getData(), currentRoute.getDestinatie(), currentRoute.getPlecare(), currentRoute.getTarif(), currentRoute.getVehicleNumber(), currentDriver, currentUser.getUsername(),currentRoute.getOraAjungere(),currentRoute.getOraPlecare());
                                 bilete.insertBilet(temp);
+                                Email email = new Email();
+                                counter = bilete.viewBilete().size();
+                                try {
+                                    email.sendMessage("Comanda Ticket Application " +counter,currentUser.getEmail(),currentRoute.getPlecare().replace(" ",""),currentRoute.getDestinatie().replace(" ",""),currentRoute.getOraPlecare(), currentRoute.getOraAjungere(),String.valueOf(currentRoute.getTarif()),String.valueOf(currentRoute.getNumberofSlots()),currentRoute.getVehicleNumber(),currentDriver);
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
+                                }
+                                session.setAttribute("counter", counter);
                             }
                             Notification.show("Your command has been sent. Check email for confirmation.", 10000, Notification.Position.TOP_CENTER);
                             UI.getCurrent().navigate("welcomeUser");
