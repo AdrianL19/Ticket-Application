@@ -98,7 +98,7 @@ public class CardView extends VerticalLayout {
                                 Email email = new Email();
                                 counter = bilete.viewBilete().size();
                                 try {
-                                    email.sendMessage("Comanda Ticket Application " +counter,currentUser.getEmail(),currentRoute.getPlecare().replace(" ",""),currentRoute.getDestinatie().replace(" ",""),currentRoute.getOraPlecare(), currentRoute.getOraAjungere(),String.valueOf(currentRoute.getTarif()),String.valueOf(currentRoute.getNumberofSlots()),currentRoute.getVehicleNumber(),currentDriver);
+                                    email.sendMessage("Comanda Ticket Application " +counter,currentUser.getEmail(),currentRoute.getPlecare().replace(" ",""),currentRoute.getDestinatie().replace(" ",""),currentRoute.getOraPlecare(), currentRoute.getOraAjungere(),String.valueOf(currentRoute.getTarif()),String.valueOf(currentRoute.getNumberofSlots()-i),currentRoute.getVehicleNumber(),currentDriver);
                                 } catch (IOException ioException) {
                                     ioException.printStackTrace();
                                 }

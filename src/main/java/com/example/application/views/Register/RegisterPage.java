@@ -14,6 +14,8 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Route(value = "register")
 @PageTitle("Register Page")
@@ -25,7 +27,13 @@ public class RegisterPage extends VerticalLayout {
     private TextField email = new TextField("Email");
     private PasswordField password= new PasswordField("Password");
     private PasswordField retypePassword = new PasswordField("Retype Password");
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
+    public static boolean validate(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+        return matcher.find();
+    }
 
     public RegisterPage() {
         setJustifyContentMode(JustifyContentMode.CENTER);
@@ -37,14 +45,19 @@ public class RegisterPage extends VerticalLayout {
     private void registerUser() {
         UsersDAO users = new UsersDAO();
 
-        if(password.getValue().equals(retypePassword.getValue())){
-            User temp = new User(0,name.getValue(),password.getValue(),email.getValue(),"User");
-            users.insertUser(temp);
-            UI.getCurrent().navigate("");
-            Notification.show("Registration complete!");
+        if(validate(email.getValue())){
+            if(password.getValue().equals(retypePassword.getValue())){
+                User temp = new User(0,name.getValue(),password.getValue(),email.getValue(),"User");
+                users.insertUser(temp);
+                UI.getCurrent().navigate("");
+                Notification.show("Registration complete!");
+            }else{
+                Notification.show("Passwords do not match!");
+            }
         }else{
-            Notification.show("Passwords do not match!");
+            Notification.show("Please enter a valid email address!");
         }
+
 
     }
 
